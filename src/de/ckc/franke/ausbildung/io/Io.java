@@ -41,4 +41,8 @@ public class Io {
 			controller.menu();
 		}
 	}
+	
+	public void getMilageInput() {
+		
+	}
 }
