@@ -99,7 +99,7 @@ public class Vehicle {
 		System.out.println("Model:");
 		String model = scan.nextLine();
 
-		carPoolManagement.getMileageInput();
+		io.getMilageInput();
 		Vehicle vehicle = new Vehicle(model, make, mileage);
 		vehicle.setId(carPoolManagement.vehicleList.size());
 		carPoolManagement.vehicleList.add(vehicle);

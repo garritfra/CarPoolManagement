@@ -43,6 +43,6 @@ public class Io {
 	}
 	
 	public void getMilageInput() {
-		
+		//TODO
 	}
 }

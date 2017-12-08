@@ -117,8 +117,6 @@ public class Reservation {
         
 
         String dateAsString = sdf.format(date);
-        //TODO Remove
-        System.err.println(dateAsString) ;
 
     	sdf.setLenient(false);
             
