@@ -17,12 +17,13 @@ public class Vehicle {
 	private int mileage;
 	public int id;
 	private LinkedList<Reservation> reservationList;
-	Scanner scan;
-	CarPoolManagement carPoolManagement;
+	public Scanner scan;
+	public CarPoolManagement carPoolManagement;
 	Io io;
-	Menu menu;
-	Controller controller;
+	public Menu menu;
+	public Controller controller;
 	Utils utils;
+	public LinkedList<Vehicle> vehicleList;
 
 	/**
 	 * Vehicle Constructor
@@ -31,13 +32,16 @@ public class Vehicle {
 	 * @param make
 	 * @param mileage
 	 */
+
+	
+	
 	public Vehicle(String model, String make, int mileage) {
 		
 		//this.id = id;
 		this.model = model;
 		this.make = make;
 		this.mileage = mileage;
-		this.setReservationList(new LinkedList<>());
+		this.reservationList = new LinkedList<>();
 	}
 
 	public String getModel() {
@@ -89,98 +93,18 @@ public class Vehicle {
 		return carPoolManagement.vehicleList.get(Integer.parseInt(id));
 	}
 	
-	public void newVehicle() {
-		Console.clear();
 
-		System.out.println("Manufacturer:");
 
-		String make = scan.nextLine();
 
-		System.out.println("Model:");
-		String model = scan.nextLine();
-
-		io.getMilageInput();
-		Vehicle vehicle = new Vehicle(model, make, mileage);
-		vehicle.setId(carPoolManagement.vehicleList.size());
-		carPoolManagement.vehicleList.add(vehicle);
-		controller.addVehicleSuccess();
-	}
-
-	public void list() {
-
-		// if no vehicles were found, return to menu
-		if (carPoolManagement.vehicleList.isEmpty()) {
-			System.err.println("No vehicles defined");
-			menu.show();
-		} else {
-			System.out.format(
-					"┌────────────────────────────┬────────────────────────────┬────────────────────────────┬───────────────┐%n");
-			System.out.format(
-					"│ ID                         │ Make                       │ Model                      │ Mileage       │%n");
-			System.out.format(
-					"├────────────────────────────┼────────────────────────────┼────────────────────────────┼───────────────┤%n");
-			String leftAlignFormat = "│ %-26s │ %-26s │ %-26s │ %-13d │ %n";
-
-			for (Vehicle vehicle : carPoolManagement.vehicleList) {
-				int id = vehicle.getId();
-				String make = utils.cutString(vehicle.getMake(), Constants.MAX_FIELD_LENGTH);
-				String model = utils.cutString(vehicle.getModel(), Constants.MAX_FIELD_LENGTH);
-				int mileage = vehicle.getMileage();
-
-				System.out.format(leftAlignFormat, id, make, model, mileage);
-
-			}
-			System.out.format(
-					"└────────────────────────────┴────────────────────────────┴────────────────────────────┴───────────────┘%n");
-
-			System.out.println("press enter to continue");
-			scan.nextLine();
-			menu.show();
-		}
-	}
 	
-	/**
-	 * lists all reservations for a given vehicle
-	 */
-	public void listReservations() {
-		Vehicle vehicle;
-		LinkedList<Reservation> reservationList = null;
-		try {
-			vehicle = find();
-			reservationList = vehicle.getReservationList();
-		} catch (NumberFormatException e) {
-			System.err.println("Enter a correct ID");
-			listReservations();
-		} catch (IndexOutOfBoundsException e) {
-			System.err.println("ID not found");
-			listReservations();
-		}
-
-		if (getReservationList().isEmpty()) {
-			System.err.println("No reservations found");
-			menu.show();
-		}
-
-		System.out.format("┌────────────────────────────────┬────────────────────────────────┐%n");
-		System.out.format("│ Reservation from               │ until                          │%n");
-		System.out.format("├────────────────────────────────┼────────────────────────────────┤%n");
-		String leftAlignFormat = "│ %-30s │ %-30s │%n";
-
-		for (Reservation reservation : reservationList) {
-			String beginnDate = reservation.getBeginnDate().toString();
-			String endDate = reservation.getEndDate().toString();
-
-			beginnDate = utils.cutString(beginnDate, Constants.MAX_FIELD_LENGTH);
-			endDate = utils.cutString(endDate, Constants.MAX_FIELD_LENGTH);
-
-			System.out.format(leftAlignFormat, beginnDate, endDate);
-
-		}
-		System.out.format("└────────────────────────────────┴────────────────────────────────┘%n");
-
-		System.out.println("press enter to continue");
-		scan.nextLine();
-		menu.show();
+	public int createID() {
+		
+		
+		this.id = 0;
+//		this.id = carPoolManagement.vehicleList.size();
+		
+		return this.id;
+		
 	}
 
 }

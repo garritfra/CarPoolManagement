@@ -19,7 +19,7 @@ public class Utils {
 	 * @param maxLength
 	 * @return
 	 */
-	public String cutString(String str, int maxLength) {
+	public static String cutString(String str, int maxLength) {
 		if (str.length() > maxLength) {
 			str = str.substring(0, maxLength);
 		}
@@ -34,7 +34,7 @@ public class Utils {
 	 * @param input
 	 * @return
 	 */
-	public boolean isDigit(String input) {
+	public static boolean isDigit(String input) {
 		try {
 			Integer.parseInt(input);
 			return true;
@@ -47,7 +47,7 @@ public class Utils {
 	 * gets current date and time
 	 * @return
 	 */
-	public Date getCurrentTime() {
+	public static Date getCurrentTime() {
 
 		Calendar cal = Calendar.getInstance();
 		System.out.println(Constants.DATE_LONG.format(cal.getTime()));
@@ -61,7 +61,7 @@ public class Utils {
 	 * @return
 	 * @throws ParseException
 	 */
-	public Calendar convertDate(String dateInput){
+	public static Calendar convertDate(String dateInput){
 
 		Calendar cal = Calendar.getInstance();
 		if (dateInput.toString().length() > 10) {
@@ -70,7 +70,6 @@ public class Utils {
 			try {
 				cal.setTime(Constants.DATE_LONG.parse(dateInput));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				System.err.println("Invalid date");
 				
 			}
@@ -80,7 +79,6 @@ public class Utils {
 			try {
 				cal.setTime(Constants.DATE_SHORT.parse(dateInput));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				System.err.println("Invalid date");
 			}
 		}
@@ -88,7 +86,7 @@ public class Utils {
 
 	}
 	
-	public Date addDays(Date date, int days)
+	public static Date addDays(Date date, int days)
     {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
