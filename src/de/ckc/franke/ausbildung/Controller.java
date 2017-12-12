@@ -1,21 +1,14 @@
 package de.ckc.franke.ausbildung;
 
-import java.text.ParseException;
-import java.util.LinkedList;
 import java.util.Scanner;
 
-import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
-import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
-import de.ckc.franke.ausbildung.util.Constants;
-import de.ckc.franke.ausbildung.util.Utils;
 
 public class Controller {
 
 	Scanner scan = new Scanner(System.in);
 	CarPoolManagement carPoolManagement;
-	private Io io = Io.getInstance();
 	Menu menu;
 	
 	

@@ -7,8 +7,6 @@ import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.Controller;
 import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
-import de.ckc.franke.ausbildung.util.Console;
-import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
 
 public class Vehicle {
@@ -84,14 +82,7 @@ public class Vehicle {
 		this.reservationList = reservationList;
 	}
 	
-	public Vehicle find() {
 
-		System.out.println("Enter a vehicle ID:");
-		String id = scan.nextLine(); // receive id as string
-
-		// return vehicle that matches the index
-		return carPoolManagement.vehicleList.get(Integer.parseInt(id));
-	}
 	
 
 

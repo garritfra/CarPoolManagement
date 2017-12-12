@@ -1,6 +1,5 @@
 package de.ckc.franke.ausbildung.io;
 
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -32,7 +31,6 @@ public class Menu {
 		this.scan = scanner;
 		this.io = io;
 		this.carPoolManagement = carPoolManagement;
-		this.controller = controller;
 	}
 
 	/**
@@ -78,15 +76,21 @@ public class Menu {
 		case 2:
 			// list all vehicles
 			listVehicles(vehicle, carPoolManagement.vehicleList);
+			System.out.println("press enter to continue");
+			scan.nextLine();
+			show();
 			break;
 
 		case 3:
+			listVehicles(vehicle, carPoolManagement.vehicleList);
 			newReservationDialog();
 			break;
 
 		case 4:
 			// list all reservations
+			listVehicles(vehicle, carPoolManagement.vehicleList);
 			listReservations();
+
 			break;
 		default:
 			System.err.println("Input not valid");
@@ -129,9 +133,6 @@ public class Menu {
 			System.out.format(
 					"└────────────────────────────┴────────────────────────────┴────────────────────────────┴───────────────┘%n");
 
-			System.out.println("press enter to continue");
-			scan.nextLine();
-			show();
 		}
 	}
 
@@ -199,7 +200,7 @@ public class Menu {
 
 		try {
 			// Enter an ID and find vehicle
-			vehicle = vehicle.find(); //TODO Fix
+			vehicle = io.findVehicle(carPoolManagement); // TODO Fix
 			reservationList = vehicle.getReservationList();
 		} catch (NumberFormatException e) {
 			System.err.println("Enter a correct ID");
