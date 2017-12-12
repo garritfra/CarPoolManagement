@@ -24,7 +24,7 @@ public class Io {
 	
 	
 
-	public int getMilageInput() {
+	public int getMilageInput() throws Exception {
 
 		String mileageStr;
 
@@ -35,11 +35,9 @@ public class Io {
 			int mileage = Integer.parseInt(mileageStr);
 			return mileage;
 		} else {
-			System.err.println("The number you entered is not numeric");
-			getMilageInput();
-		}
+			throw new Exception("The number you entered is not numeric");
 
-		return 0;
+		}
 	}
 	
 	public Vehicle findVehicle(CarPoolManagement carPoolManagement) {

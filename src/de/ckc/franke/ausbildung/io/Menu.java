@@ -170,6 +170,7 @@ public class Menu {
 					if (choice.trim().equals("Y") || choice.trim().equals("y")) {
 						// Yes
 						carPoolManagement.newReservation(vehicle);
+						
 						valid = true;
 					} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
 						// No

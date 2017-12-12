@@ -137,7 +137,7 @@ public class Reservation {
 	}
 
 	public void validateReservation(Vehicle vehicle, Date dateStart, Date dateEnd, CarPoolManagement carPoolManagement,
-			LinkedList<Reservation> reservationList){
+			LinkedList<Reservation> reservationList) throws Exception{
 		// Check if vehicle is already booked
 		if (isDuplicate(this, reservationList)) {
 			System.err.println("The vehicle is already booked for this date");
@@ -152,22 +152,19 @@ public class Reservation {
 			// upon validation
 			cal.add(Calendar.MINUTE, -10);
 			if (!cal.getTime().before(dateStart)) {
-				System.err.println("The date you entered is in the past");
-				carPoolManagement.newReservation(vehicle);
+				throw new Exception("The date you entered is in the past");
 			}
 
 		}
 
 		// Check if begin is after end date
 		if (EndBeforeBegin(dateStart, dateEnd)) {
-			System.err.println("The end date can not be before the begin date");
-			carPoolManagement.newReservation(vehicle);
+			throw new Exception("The end date can not be before the begin date");
 		}
 
 		// Check if date exists
 		if (!dateExists(dateStart) || !dateExists(dateEnd)) {
-			System.err.println("You have entered a invalid date");
-			carPoolManagement.newReservation(vehicle);
+			throw new Exception("You have entered a invalid date");
 		}
 	}
 

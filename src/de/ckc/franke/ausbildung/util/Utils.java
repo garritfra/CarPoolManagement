@@ -1,8 +1,12 @@
 package de.ckc.franke.ausbildung.util;
 
+import static org.junit.Assume.assumeNotNull;
+
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+
+import de.ckc.franke.ausbildung.CarPoolManagement;
 
 /**
  * method utilities
@@ -59,10 +63,13 @@ public class Utils {
 	 * converts a string to either a date or date and time 
 	 * @param dateInput
 	 * @return
+	 * @throws Exception 
 	 * @throws ParseException
 	 */
-	public static Calendar convertDate(String dateInput){
+	public static Calendar convertDate(String dateInput) throws Exception{
 
+		boolean err = false;
+		
 		Calendar cal = Calendar.getInstance();
 		if (dateInput.toString().length() > 10) {
 			// user probably specified a time
@@ -79,9 +86,11 @@ public class Utils {
 			try {
 				cal.setTime(Constants.DATE_SHORT.parse(dateInput));
 			} catch (Exception e) {
-				System.err.println("Invalid date");
+				System.err.println();
+				throw new Exception("Invalid date");
 			}
 		}
+		
 		return cal;
 
 	}
