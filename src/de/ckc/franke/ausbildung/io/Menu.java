@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.Controller;
-import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
@@ -15,10 +14,10 @@ public class Menu {
 	Scanner scan = new Scanner(System.in);
 	Utils utils;
 	Io io;
-	Vehicle vehicle;
 	Controller controller;
 	CarPoolManagement carPoolManagement;
 	public static Menu instance;
+	Vehicle vehicle = new Vehicle(null, null, 0);
 
 	// public static Menu getInstance() {
 	// if (Menu.instance == null) {
@@ -55,7 +54,8 @@ public class Menu {
 			int number = Integer.parseInt(choice.trim());
 			this.selectOption(number);
 		} else {
-			this.getChoice();
+			System.err.println("Invalid Input");
+			show();
 		}
 	}
 
@@ -78,21 +78,28 @@ public class Menu {
 			listVehicles(vehicle, carPoolManagement.vehicleList);
 			System.out.println("press enter to continue");
 			scan.nextLine();
+
+			// go back to menu
 			show();
 			break;
 
 		case 3:
+			// list all vehicles for the user
 			listVehicles(vehicle, carPoolManagement.vehicleList);
+			// create new reservation
 			newReservationDialog();
 			break;
 
 		case 4:
 			// list all reservations
 			listVehicles(vehicle, carPoolManagement.vehicleList);
-			listReservations();
+			vehicle.listReservations(vehicle, carPoolManagement);
+			this.show();
 
 			break;
 		default:
+
+			// Handle invalid inputs
 			System.err.println("Input not valid");
 			this.show();
 		}
@@ -107,7 +114,7 @@ public class Menu {
 	 *            TODO
 	 */
 	public void listVehicles(Vehicle vehicle, LinkedList<Vehicle> vehicleList) {
-
+		
 		// if no vehicles were found, return to menu
 		if (vehicleList.isEmpty()) {
 			System.err.println("No vehicles defined");
@@ -170,6 +177,7 @@ public class Menu {
 					if (choice.trim().equals("Y") || choice.trim().equals("y")) {
 						// Yes
 						carPoolManagement.newReservation(vehicle);
+
 						valid = true;
 					} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
 						// No
@@ -191,50 +199,5 @@ public class Menu {
 
 	}
 
-	/**
-	 * lists all reservations for a given vehicle
-	 */
-	public void listReservations() {
-		Vehicle vehicle = null;
-		LinkedList<Reservation> reservationList = null;
-
-		try {
-			// Enter an ID and find vehicle
-			vehicle = io.findVehicle(carPoolManagement); // TODO Fix
-			reservationList = vehicle.getReservationList();
-		} catch (NumberFormatException e) {
-			System.err.println("Enter a correct ID");
-			listReservations();
-		} catch (IndexOutOfBoundsException e) {
-			System.err.println("ID not found");
-			listReservations();
-		}
-
-		if (vehicle.getReservationList().isEmpty()) {
-			System.err.println("No reservations found");
-			show();
-		}
-
-		System.out.format("┌────────────────────────────────┬────────────────────────────────┐%n");
-		System.out.format("│ Reservation from               │ until                          │%n");
-		System.out.format("├────────────────────────────────┼────────────────────────────────┤%n");
-		String leftAlignFormat = "│ %-30s │ %-30s │%n";
-
-		for (Reservation reservation : reservationList) {
-			String beginnDate = reservation.getBeginnDate().toString();
-			String endDate = reservation.getEndDate().toString();
-
-			beginnDate = Utils.cutString(beginnDate, Constants.MAX_FIELD_LENGTH);
-			endDate = Utils.cutString(endDate, Constants.MAX_FIELD_LENGTH);
-
-			System.out.format(leftAlignFormat, beginnDate, endDate);
-
-		}
-		System.out.format("└────────────────────────────────┴────────────────────────────────┘%n");
-
-		System.out.println("press enter to continue");
-		scan.nextLine();
-		show();
-	}
 
 }

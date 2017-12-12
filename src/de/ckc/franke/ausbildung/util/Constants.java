@@ -9,8 +9,11 @@ import java.text.SimpleDateFormat;
  *
  */
 public final class Constants {
+	
+	
 	public static final int MAX_FIELD_LENGTH = 30;	//max length of table
-	public static final DateFormat DATE_LONG = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	public static final DateFormat DATE_SHORT = new SimpleDateFormat("dd/MM/yyyy");
+	public static final DateFormat DATE_LONG = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+	public static final DateFormat DATE_SHORT = new SimpleDateFormat("dd.MM.yyyy");
+	
 	
 }

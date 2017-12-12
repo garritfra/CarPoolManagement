@@ -12,7 +12,6 @@ import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
-import de.ckc.franke.ausbildung.util.Console;
 import de.ckc.franke.ausbildung.util.Utils;
 
 public class CarPoolManagement {
@@ -22,6 +21,7 @@ public class CarPoolManagement {
 	Io io = Io.getInstance();
 	Menu menu = new Menu(this, io, scan);
 	Controller controller = new Controller(this, menu);
+	Reservation reservation;
 
 	// public static CarPoolManagement getInstance() {
 	// if (CarPoolManagement.instance == null) {
@@ -64,26 +64,37 @@ public class CarPoolManagement {
 		Date dateStart = null;
 		Date dateEnd = null;
 
-		System.out.println("Enter a starting date in format dd/MM/yyyy (HH:mm) (enter 'c' for current date)");
+		
+		System.out.println("Enter a starting date in format dd.MM.yyyy (HH:mm) (enter 'c' for current date)");
 		String dateInput = scan.nextLine().trim();
 
-		if (dateInput.toString().toLowerCase().contains("c")) {
+		if (dateInput.toString().toLowerCase().startsWith("c")) {
 			// use current time as beginning
 			dateStart = Utils.getCurrentTime();
 		} else {
 			try {
-				dateStart = validateDateFormat(dateInput);
+				//Format time from string to date
+				dateStart = Utils.convertDate(dateInput).getTime();
+				
 			} catch (Exception e) {
 				System.err.println("date has an invalid format");
+				newReservation(vehicle);
 			}
 		}
 
 		dateEnd = reservationEndMenu(dateInput, dateStart);
 
 		Reservation reservation = new Reservation(dateStart, dateEnd, vehicle);
+		
 		LinkedList<Reservation> reservationList = vehicle.getReservationList();
 
-		reservation.validateReservation(vehicle, dateStart, dateEnd, this, reservationList);
+		try {
+			Utils.validateReservation(reservation, vehicle, dateStart, dateEnd, reservationList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+			newReservation(vehicle);
+		}
 
 		vehicle.getReservationList().add(reservation);
 		System.out.println("Reservation has been saved");
@@ -96,7 +107,7 @@ public class CarPoolManagement {
 
 		Date dateEnd = null;
 		// Output options
-		System.out.println("Select a duration or enter an end date in format dd/MM/yyyy (HH:mm)");
+		System.out.println("Select a duration or enter an end date in format dd.MM.yyyy (HH:mm)");
 		System.out.println("1. One Day");
 		System.out.println("2. One Week");
 		System.out.println("3. One Month");
@@ -146,13 +157,21 @@ public class CarPoolManagement {
 	private Date validateDateFormat(String dateInput) {
 		Date time = null;
 
-		time = Utils.convertDate(dateInput).getTime();
+		try {
+			time = Utils.convertDate(dateInput).getTime();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+			System.out.flush();
+			System.err.flush();
+			newReservation(vehicle);
+			
+		}
 
 		return time;
 	}
 
 	public void newVehicle() {
-		Console.clear();
 
 		System.out.println("Manufacturer:");
 
@@ -161,7 +180,12 @@ public class CarPoolManagement {
 		System.out.println("Model:");
 		String model = scan.nextLine();
 
-		mileage = io.getMilageInput();
+		try {
+			mileage = io.getMilageInput();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			newVehicle();
+		}
 		Vehicle vehicle = new Vehicle(model, make, mileage);
 		vehicle.setId(vehicleList.size());
 		vehicleList.add(vehicle);
