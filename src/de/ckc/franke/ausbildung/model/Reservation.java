@@ -3,24 +3,13 @@ package de.ckc.franke.ausbildung.model;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.Scanner;
-
-import de.ckc.franke.ausbildung.CarPoolManagement;
-import de.ckc.franke.ausbildung.io.Menu;
-import de.ckc.franke.ausbildung.util.Constants;
-import de.ckc.franke.ausbildung.util.Utils;
 
 public class Reservation {
 
 	private Date beginnDate;
 	private Date endDate;
 	private Vehicle vehicle;
-	private Menu menu;
-	private Scanner scan;
-
 	public Reservation(Date dateStart, Date dateEnd, Vehicle vehicle) {
 		this.setBeginDate(dateStart);
 		this.setEndDate(dateEnd);

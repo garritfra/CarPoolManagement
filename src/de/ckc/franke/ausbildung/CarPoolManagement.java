@@ -1,7 +1,6 @@
 package de.ckc.franke.ausbildung;
 
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 /**
  * Main Program
@@ -13,7 +12,6 @@ import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
-import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
 
 public class CarPoolManagement {

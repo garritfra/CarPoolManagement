@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
-import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 
@@ -189,13 +188,14 @@ public class Utils {
 
 	private static boolean dateExists(Date date) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		//TODO Formatter should be at input
+		try {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+		sdf.setLenient(false);
 
 		String dateAsString = sdf.format(date);
 
-		sdf.setLenient(true);
 
-		try {
 			sdf.parse(dateAsString);
 		} catch (ParseException e) {
 
