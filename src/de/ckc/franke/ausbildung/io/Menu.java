@@ -45,17 +45,23 @@ public class Menu {
 		System.out.println("3. create new reservation");
 		System.out.println("4. list all reservations");
 
-		getChoice();
+		try {
+			getChoice();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.err.println(e.getMessage());
+			show();
+		}
 	}
 
-	public void getChoice() {
+	public void getChoice() throws Exception {
 
 		String choice = scan.nextLine();
 		if (Utils.isDigit(choice.trim())) {
 			int number = Integer.parseInt(choice.trim());
 			this.selectOption(number);
 		} else {
-			this.getChoice();
+			throw new Exception("Invalid Input");
 		}
 	}
 
