@@ -1,6 +1,7 @@
 package de.ckc.franke.ausbildung;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 /**
  * Main Program
@@ -12,7 +13,7 @@ import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
-import de.ckc.franke.ausbildung.util.Console;
+import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
 
 public class CarPoolManagement {
@@ -22,6 +23,7 @@ public class CarPoolManagement {
 	Io io = Io.getInstance();
 	Menu menu = new Menu(this, io, scan);
 	Controller controller = new Controller(this, menu);
+	Reservation reservation;
 
 	// public static CarPoolManagement getInstance() {
 	// if (CarPoolManagement.instance == null) {
@@ -64,6 +66,7 @@ public class CarPoolManagement {
 		Date dateStart = null;
 		Date dateEnd = null;
 
+		
 		System.out.println("Enter a starting date in format dd.MM.yyyy (HH:mm) (enter 'c' for current date)");
 		String dateInput = scan.nextLine().trim();
 
@@ -72,7 +75,9 @@ public class CarPoolManagement {
 			dateStart = Utils.getCurrentTime();
 		} else {
 			try {
-				dateStart = validateDateFormat(dateInput);
+				//Format time from string to date
+				dateStart = Utils.convertDate(dateInput).getTime();
+				
 			} catch (Exception e) {
 				System.err.println("date has an invalid format");
 				newReservation(vehicle);
@@ -82,10 +87,11 @@ public class CarPoolManagement {
 		dateEnd = reservationEndMenu(dateInput, dateStart);
 
 		Reservation reservation = new Reservation(dateStart, dateEnd, vehicle);
+		
 		LinkedList<Reservation> reservationList = vehicle.getReservationList();
 
 		try {
-			reservation.validateReservation(vehicle, dateStart, dateEnd, this, reservationList);
+			Utils.validateReservation(reservation, vehicle, dateStart, dateEnd, reservationList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.err.println(e.getMessage());

@@ -40,13 +40,5 @@ public class Io {
 		}
 	}
 	
-	public Vehicle findVehicle(CarPoolManagement carPoolManagement) {
 
-		System.out.println("Enter a vehicle ID:");
-		String idStr = scan.nextLine(); // receive id as string
-		int id = Integer.parseInt(idStr);
-		
-		// return vehicle that matches the index
-		return carPoolManagement.vehicleList.get(id);
-	}
 }
