@@ -64,7 +64,7 @@ public class CarPoolManagement {
 		Date dateStart = null;
 		Date dateEnd = null;
 
-		System.out.println("Enter a starting date in format dd/MM/yyyy (HH:mm) (enter 'c' for current date)");
+		System.out.println("Enter a starting date in format dd.MM.yyyy (HH:mm) (enter 'c' for current date)");
 		String dateInput = scan.nextLine().trim();
 
 		if (dateInput.toString().toLowerCase().contains("c")) {
@@ -96,7 +96,7 @@ public class CarPoolManagement {
 
 		Date dateEnd = null;
 		// Output options
-		System.out.println("Select a duration or enter an end date in format dd/MM/yyyy (HH:mm)");
+		System.out.println("Select a duration or enter an end date in format dd.MM.yyyy (HH:mm)");
 		System.out.println("1. One Day");
 		System.out.println("2. One Week");
 		System.out.println("3. One Month");
