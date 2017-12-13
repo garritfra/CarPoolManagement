@@ -53,9 +53,9 @@ public class CarPoolManagement {
 		this.vehicleList = vehicleList;
 		
 		// TEST DATA
-		Vehicle seat = new Vehicle("Ibiza", "Seat", 55000);
-		seat.setId(seat.createID(vehicleList));
-		vehicleList.add(seat);
+//		Vehicle seat = new Vehicle("Ibiza", "Seat", 55000);
+//		seat.setId(seat.createID(vehicleList));
+//		vehicleList.add(seat);
 		
 		
 		//Set Dateformat Constants to not lenient for date conversion

@@ -1,13 +1,6 @@
 package de.ckc.franke.ausbildung.model;
 
 import java.util.LinkedList;
-import java.util.Scanner;
-
-import de.ckc.franke.ausbildung.CarPoolManagement;
-import de.ckc.franke.ausbildung.Controller;
-import de.ckc.franke.ausbildung.io.Io;
-import de.ckc.franke.ausbildung.io.Menu;
-import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
 
 public class Vehicle {
@@ -16,13 +9,13 @@ public class Vehicle {
 	private int mileage;
 	public int id;
 	private LinkedList<Reservation> reservationList;
-	public Scanner scan = new Scanner(System.in);
-	public CarPoolManagement carPoolManagement;
-	Io io;
-	public Menu menu;
-	public Controller controller;
+//	public Scanner scan = new Scanner(System.in);
+//	public CarPoolManagement carPoolManagement;
+//	Io io;
+//	public Menu menu;
+//	public Controller controller;
 	Utils utils;
-	public LinkedList<Vehicle> vehicleList;
+//	public LinkedList<Vehicle> vehicleList;
 
 	/**
 	 * Vehicle Constructor
@@ -86,6 +79,10 @@ public class Vehicle {
 	public int createID(LinkedList<Vehicle> vehicleList) {
 
 		this.id = vehicleList.size();
+		
+		if(vehicleList.size() == 0) {
+			this.id = 0;
+		}
 		
 
 		return this.id;

@@ -14,7 +14,7 @@ public class Main {
 		for(String s : args) {
 			vehicleAttr = s.split(",");
 			
-			for(int i = 0; i < args.length; i++) {
+//			for(int i = 0; i <= 2; i++) {
 				
 				String model = vehicleAttr[0];
 				String make = vehicleAttr[1];
@@ -27,9 +27,10 @@ public class Main {
 				vehicle.createID(vehicleList);
 				
 				vehicleList.push(vehicle);
+				
 				vehicle = null;
 			
-		}
+//		}
 		}
 		
 			
