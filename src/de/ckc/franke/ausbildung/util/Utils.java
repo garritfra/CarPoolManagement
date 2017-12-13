@@ -78,13 +78,15 @@ public class Utils {
 			try {
 				cal.setTime(Constants.DATE_LONG.parse(dateInput));
 			} catch (Exception e) {
-				System.err.println("Invalid date");
+				return null;
 
 			}
 
 		} else {
 			// user probably didn't specify a time
 			try {
+
+				
 				cal.setTime(Constants.DATE_SHORT.parse(dateInput));
 			} catch (Exception e) {
 				System.err.println();
@@ -188,7 +190,7 @@ public class Utils {
 
 	private static boolean dateExists(Date date) {
 
-		//TODO Formatter should be at input
+		//TODO Validation should be at input
 		try {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		sdf.setLenient(false);
@@ -210,4 +212,10 @@ public class Utils {
 		// return true, if end date is before begin date
 		return dateEnd.before(dateBegin);
 	}
+	
+	public static void flush() {
+		System.out.flush();
+		System.err.flush();
+	}
+	
 }

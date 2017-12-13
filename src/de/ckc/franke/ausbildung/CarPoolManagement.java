@@ -12,6 +12,7 @@ import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
+import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
 
 public class CarPoolManagement {
@@ -52,6 +53,11 @@ public class CarPoolManagement {
 		Vehicle seat = new Vehicle("Ibiza", "Seat", 55000);
 		seat.setId(seat.createID());
 		vehicleList.add(seat);
+		
+		
+		//Set Dateformat Constants to not lenient for date conversion
+		Constants.DATE_LONG.setLenient(false);
+		Constants.DATE_SHORT.setLenient(false);
 
 		menu.show();
 	}
@@ -64,7 +70,6 @@ public class CarPoolManagement {
 		Date dateStart = null;
 		Date dateEnd = null;
 
-		
 		System.out.println("Enter a starting date in format dd.MM.yyyy (HH:mm) (enter 'c' for current date)");
 		String dateInput = scan.nextLine().trim();
 
@@ -73,10 +78,11 @@ public class CarPoolManagement {
 			dateStart = Utils.getCurrentTime();
 		} else {
 			try {
-				//Format time from string to date
+				// Format time from string to date
 				dateStart = Utils.convertDate(dateInput).getTime();
-				
+
 			} catch (Exception e) {
+				Utils.flush();
 				System.err.println("date has an invalid format");
 				newReservation(vehicle);
 			}
@@ -85,7 +91,7 @@ public class CarPoolManagement {
 		dateEnd = reservationEndMenu(dateInput, dateStart);
 
 		Reservation reservation = new Reservation(dateStart, dateEnd, vehicle);
-		
+
 		LinkedList<Reservation> reservationList = vehicle.getReservationList();
 
 		try {
@@ -147,12 +153,11 @@ public class CarPoolManagement {
 	}
 
 	/**
-	 * validates, if a string is equal to a date format 
-	 * TODO add validation for correct date
+	 * validates, if a string is equal to a date format TODO add validation for
+	 * correct date
 	 * 
 	 * @param dateInput
 	 * 
-	 * @throws ParseException
 	 */
 	private Date validateDateFormat(String dateInput) {
 		Date time = null;
@@ -165,7 +170,7 @@ public class CarPoolManagement {
 			System.out.flush();
 			System.err.flush();
 			newReservation(vehicle);
-			
+
 		}
 
 		return time;

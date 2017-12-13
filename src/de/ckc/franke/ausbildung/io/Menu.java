@@ -158,6 +158,7 @@ public class Menu {
 
 		// retry if ID is not a number
 		if (!Utils.isDigit(id)) {
+			Utils.flush();
 			System.err.println("ID is not valid\n");
 			newReservationDialog();
 		} else {
@@ -191,6 +192,7 @@ public class Menu {
 				} while (!valid);
 
 			} catch (IndexOutOfBoundsException e) {
+				Utils.flush();
 				System.err.println("Vehicle ID not found\n");
 				newReservationDialog();
 
