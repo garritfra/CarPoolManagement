@@ -26,7 +26,7 @@ public class Main {
 				
 				vehicle.createID(vehicleList);
 				
-				vehicleList.push(vehicle);
+				vehicleList.addLast(vehicle);
 				
 				vehicle = null;
 			

@@ -198,7 +198,7 @@ public class CarPoolManagement {
 		}
 		Vehicle vehicle = new Vehicle(model, make, mileage);
 		vehicle.setId(vehicleList.size());
-		vehicleList.add(vehicle);
+		vehicleList.addLast(vehicle);
 		controller.addVehicleSuccess();
 	}
 	
