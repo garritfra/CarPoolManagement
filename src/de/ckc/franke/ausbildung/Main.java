@@ -8,44 +8,33 @@ import de.ckc.franke.ausbildung.util.Console;
 public class Main {
 
 	public static void main(String[] args) {
-		
+
 		LinkedList<Vehicle> vehicleList = new LinkedList<>();
 		String[] vehicleAttr = null;
-		for(String s : args) {
+		for (String s : args) {
 			vehicleAttr = s.split(",");
-			
-//			for(int i = 0; i <= 2; i++) {
-				
-				String model = vehicleAttr[0];
-				String make = vehicleAttr[1];
-				int mileage = Integer.parseInt(vehicleAttr[2]);
-				
-				
-				
-				Vehicle vehicle = new Vehicle(model, make, mileage);
-				
-				vehicle.createID(vehicleList);
-				
-				vehicleList.addLast(vehicle);
-				
-				vehicle = null;
-			
-//		}
-		}
-		
-			
 
-		
-		
-		
-		//create new instance of the program
+			String model = vehicleAttr[0];
+			String make = vehicleAttr[1];
+			int mileage = Integer.parseInt(vehicleAttr[2]);
+
+			Vehicle vehicle = new Vehicle(model, make, mileage);
+
+			vehicle.createID(vehicleList);
+
+			vehicleList.addLast(vehicle);
+
+			vehicle = null;
+		}
+
+		// create new instance of the program
 		CarPoolManagement carPoolManagement = new CarPoolManagement();
-		
-		//clear screen before program runs
-		Console.clear();	
-		
-		//start program
-		
+
+		// clear screen before program runs
+		Console.clear();
+
+		// start program
+
 		carPoolManagement.start(vehicleList);
 	}
 

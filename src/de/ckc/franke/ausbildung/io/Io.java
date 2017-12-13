@@ -76,6 +76,7 @@ public class Io {
 
 
 		if (vehicle.getReservationList().isEmpty()) {
+			Utils.flush();
 			System.err.println("No reservations found");
 			return;
 		}

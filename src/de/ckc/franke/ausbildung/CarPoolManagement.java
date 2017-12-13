@@ -171,8 +171,7 @@ public class CarPoolManagement {
 		try {
 			time = Utils.convertDate(dateInput).getTime();
 		} catch (Exception e) {
-			System.out.flush();
-			System.err.flush();
+			Utils.flush();
 			System.err.println(e.getMessage());
 			newReservation(vehicle);
 
@@ -193,6 +192,7 @@ public class CarPoolManagement {
 		try {
 			mileage = io.getMilageInput();
 		} catch (Exception e) {
+			Utils.flush();
 			System.err.println(e.getMessage());
 			newVehicle();
 		}
