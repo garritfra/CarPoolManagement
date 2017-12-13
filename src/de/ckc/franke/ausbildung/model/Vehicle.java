@@ -137,10 +137,10 @@ public class Vehicle {
 		return;
 	}
 
-	public int createID() {
+	public int createID(LinkedList<Vehicle> vehicleList) {
 
-		this.id = 0;
-		// this.id = carPoolManagement.vehicleList.size();
+		this.id = vehicleList.size();
+		
 
 		return this.id;
 

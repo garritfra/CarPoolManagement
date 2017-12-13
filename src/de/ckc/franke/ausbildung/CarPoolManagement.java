@@ -23,13 +23,14 @@ public class CarPoolManagement {
 	Menu menu = new Menu(this, io, scan);
 	Controller controller = new Controller(this, menu);
 	Reservation reservation;
-
-	// public static CarPoolManagement getInstance() {
-	// if (CarPoolManagement.instance == null) {
-	// CarPoolManagement.instance = new CarPoolManagement();
-	// }
-	// return instance;
-	// }
+//	private static CarPoolManagement instance;
+//
+//	 public static CarPoolManagement getInstance() {
+//	 if (CarPoolManagement.instance == null) {
+//	 CarPoolManagement.instance = new CarPoolManagement();
+//	 }
+//	 return instance;
+//	 }
 
 	boolean err;
 	int mileage = 0;
@@ -47,11 +48,13 @@ public class CarPoolManagement {
 	/**
 	 * Program start
 	 */
-	void start() {
-		vehicleList = new LinkedList<>();
+	void start(LinkedList<Vehicle> vehicleList) {
+		
+		this.vehicleList = vehicleList;
+		
 		// TEST DATA
 		Vehicle seat = new Vehicle("Ibiza", "Seat", 55000);
-		seat.setId(seat.createID());
+		seat.setId(seat.createID(vehicleList));
 		vehicleList.add(seat);
 		
 		
@@ -79,11 +82,15 @@ public class CarPoolManagement {
 		} else {
 			try {
 				// Format time from string to date
+				
+				Utils.flush();
 				dateStart = Utils.convertDate(dateInput).getTime();
-
-			} catch (Exception e) {
+				Utils.flush();
+				
+			} catch (ParseException e) {
 				Utils.flush();
 				System.err.println("date has an invalid format");
+				Utils.flush();
 				newReservation(vehicle);
 			}
 		}
@@ -165,10 +172,9 @@ public class CarPoolManagement {
 		try {
 			time = Utils.convertDate(dateInput).getTime();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.err.println(e.getMessage());
 			System.out.flush();
 			System.err.flush();
+			System.err.println(e.getMessage());
 			newReservation(vehicle);
 
 		}

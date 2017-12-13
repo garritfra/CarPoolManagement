@@ -69,29 +69,19 @@ public class Utils {
 	 * @throws Exception
 	 * @throws ParseException
 	 */
-	public static Calendar convertDate(String dateInput) throws Exception {
+	public static Calendar convertDate(String dateInput) throws ParseException {
 
 		Calendar cal = Calendar.getInstance();
 		if (dateInput.toString().length() > 10) {
 			// user probably specified a time
 
-			try {
 				cal.setTime(Constants.DATE_LONG.parse(dateInput));
-			} catch (Exception e) {
-				return null;
-
-			}
+			
 
 		} else {
-			// user probably didn't specify a time
-			try {
-
 				
 				cal.setTime(Constants.DATE_SHORT.parse(dateInput));
-			} catch (Exception e) {
-				System.err.println();
-				throw new Exception("Invalid date");
-			}
+			
 		}
 
 		return cal;
