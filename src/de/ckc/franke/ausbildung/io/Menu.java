@@ -93,7 +93,11 @@ public class Menu {
 		case 4:
 			// list all reservations
 			listVehicles(vehicle, carPoolManagement.vehicleList);
-			vehicle.listReservations(vehicle, carPoolManagement);
+			
+			vehicle = io.findVehicleForReservation(carPoolManagement.vehicleList);
+			
+			
+			io.listReservationsForVehicle(vehicle);
 			this.show();
 
 			break;
@@ -200,6 +204,8 @@ public class Menu {
 		}
 
 	}
+	
+
 
 
 }

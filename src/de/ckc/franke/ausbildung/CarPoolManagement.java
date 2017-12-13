@@ -104,7 +104,6 @@ public class CarPoolManagement {
 		try {
 			Utils.validateReservation(reservation, vehicle, dateStart, dateEnd, reservationList);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.err.println(e.getMessage());
 			newReservation(vehicle);
 		}
@@ -202,5 +201,7 @@ public class CarPoolManagement {
 		vehicleList.add(vehicle);
 		controller.addVehicleSuccess();
 	}
+	
+	
 
 }

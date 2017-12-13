@@ -81,61 +81,7 @@ public class Vehicle {
 		this.reservationList = reservationList;
 	}
 
-	/**
-	 * lists all reservations for a given vehicle
-	 */
-	public void listReservations(Vehicle vehicle, CarPoolManagement carPoolManagement) {
 
-		try {
-			
-			System.out.println("create new reservation for vehicle: ");
-			String id = scan.nextLine().trim();
-
-			// retry if ID is not a number
-			if (!Utils.isDigit(id)) {
-				System.err.println("ID is not valid\n");
-			} else {
-				// retry if ID is out of bounds
-					vehicle = carPoolManagement.vehicleList.get(Integer.parseInt(id));
-			}
-			// Enter an ID and find vehicle
-			//reservationList = carPoolManagement.getReservationList();
-			
-			
-		} catch (NumberFormatException e) {
-			System.err.println("Enter a correct ID");
-			listReservations(vehicle, carPoolManagement);
-		} catch (IndexOutOfBoundsException e) {
-			System.err.println("ID not found");
-			listReservations(vehicle, carPoolManagement);
-		}
-
-		if (vehicle.getReservationList().isEmpty()) {
-			System.err.println("No reservations found");
-			return;
-		}
-
-		System.out.format("┌────────────────────────────────┬────────────────────────────────┐%n");
-		System.out.format("│ Reservation from               │ until                          │%n");
-		System.out.format("├────────────────────────────────┼────────────────────────────────┤%n");
-		String leftAlignFormat = "│ %-30s │ %-30s │%n";
-
-		for (Reservation reservation : vehicle.reservationList) {
-			String beginnDate = reservation.getBeginnDate().toString();
-			String endDate = reservation.getEndDate().toString();
-
-			beginnDate = Utils.cutString(beginnDate, Constants.MAX_FIELD_LENGTH);
-			endDate = Utils.cutString(endDate, Constants.MAX_FIELD_LENGTH);
-
-			System.out.format(leftAlignFormat, beginnDate, endDate);
-
-		}
-		System.out.format("└────────────────────────────────┴────────────────────────────────┘%n");
-
-		System.out.println("press enter to continue");
-		scan.nextLine();
-		return;
-	}
 
 	public int createID(LinkedList<Vehicle> vehicleList) {
 
