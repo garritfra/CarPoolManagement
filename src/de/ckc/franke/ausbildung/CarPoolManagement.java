@@ -15,7 +15,6 @@ import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
-
 public class CarPoolManagement {
 	Scanner scan = new Scanner(System.in);
 	// Utils utils = new Utils();
@@ -36,7 +35,7 @@ public class CarPoolManagement {
 	boolean err;
 	int mileage = 0;
 
-	public LinkedList<Vehicle> vehicleList;
+	public static LinkedList<Vehicle> vehicleList;
 
 	// CarPoolManagement() {}
 

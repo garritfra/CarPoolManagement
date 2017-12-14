@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
 
 public class Data {
@@ -19,8 +20,8 @@ public class Data {
 	public void menu(Io io) {
 		System.out.println("\nImport/Export Data");
 		System.out.println("--------------------");
-		System.out.println("1. Import a txt file");
-		System.out.println("2. Export a txt file");
+		System.out.println("1. Import from txt file");
+		System.out.println("2. Export as txt file");
 
 		selectOption(io.getChoice());
 	}
@@ -39,6 +40,7 @@ public class Data {
 
 		case 2:
 			// TODO Export File
+			Data.toJSON(CarPoolManagement.vehicleList);
 			break;
 		default:
 			// Handle invalid inputs
@@ -71,8 +73,7 @@ public class Data {
 			vehicleObj.put("model", vehicle.getModel());
 			vehicleObj.put("make", vehicle.getMake());
 			vehicleObj.put("ID", vehicle.getId());
-			
-			
+
 			arr.add(vehicleObj);
 		}
 
@@ -81,6 +82,7 @@ public class Data {
 			FileWriter file = new FileWriter("vehicles.json");
 			file.write(arr.toJSONString());
 			file.flush();
+			System.out.println("Data has been exported"); // TODO Add "'to ' + path"
 			file.close();
 
 		} catch (IOException e) {
