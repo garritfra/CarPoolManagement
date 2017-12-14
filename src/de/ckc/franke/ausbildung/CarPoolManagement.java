@@ -159,8 +159,6 @@ public class CarPoolManagement {
 	}
 
 	/**
-	 * validates, if a string is equal to a date format TODO add validation for
-	 * correct date
 	 * 
 	 * @param dateInput
 	 * 

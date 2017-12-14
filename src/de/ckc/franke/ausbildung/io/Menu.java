@@ -44,21 +44,21 @@ public class Menu {
 		System.out.println("3. create new reservation");
 		System.out.println("4. list all reservations");
 
-		getChoice();
+		io.getChoice();
 		show();
 	}
 
-	public void getChoice() {
-
-		String choice = scan.nextLine();
-		if (Utils.isDigit(choice.trim())) {
-			int number = Integer.parseInt(choice.trim());
-			this.selectOption(number);
-		} else {
-			System.err.println("Invalid Input");
-			return;
-		}
-	}
+//	public void getChoice() {
+//
+//		String choice = scan.nextLine();
+//		if (Utils.isDigit(choice.trim())) {
+//			int number = Integer.parseInt(choice.trim());
+//			this.selectOption(number);
+//		} else {
+//			System.err.println("Invalid Input");
+//			return;
+//		}
+//	}
 
 	/**
 	 * checks selection of menu

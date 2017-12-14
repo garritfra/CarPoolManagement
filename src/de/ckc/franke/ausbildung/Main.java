@@ -24,6 +24,7 @@ public class Main {
 
 			vehicleList.addLast(vehicle);
 
+			//Reset vehicle to prevent wrong entries
 			vehicle = null;
 		}
 

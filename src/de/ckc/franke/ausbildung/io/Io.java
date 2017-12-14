@@ -104,6 +104,17 @@ public class Io {
 		return;
 	}
 
+	public int getChoice() {
+
+		String choice = scan.nextLine();
+		if (Utils.isDigit(choice.trim())) {
+			int number = Integer.parseInt(choice.trim());
+			return number;
+		} else {
+			System.err.println("Invalid Input");
+			return 0;
+		}
+	}
 
 
 }

@@ -9,6 +9,7 @@ import de.ckc.franke.ausbildung.util.Utils;
 public class Data {
 
 	Scanner scan = new Scanner(System.in);
+	Io io;
 	
 	public void menu() {
 		System.out.println("\nImport/Export Data");
@@ -16,21 +17,11 @@ public class Data {
 		System.out.println("1. Import a txt file");
 		System.out.println("2. Export a txt file");
 		
-		getChoice();
+		selectOption(io.getChoice());
 
 	}
 
-	public void getChoice() {
 
-		String choice = scan.nextLine();
-		if (Utils.isDigit(choice.trim())) {
-			int number = Integer.parseInt(choice.trim());
-			selectOption(number);
-		} else {
-			System.err.println("Invalid Input");
-			return;
-		}
-	}
 	
 	/**
 	 * checks selection of menu
