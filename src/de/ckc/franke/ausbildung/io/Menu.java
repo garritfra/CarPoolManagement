@@ -45,6 +45,7 @@ public class Menu {
 		System.out.println("4. list all reservations");
 
 		getChoice();
+		show();
 	}
 
 	public void getChoice() {
@@ -55,7 +56,7 @@ public class Menu {
 			this.selectOption(number);
 		} else {
 			System.err.println("Invalid Input");
-			show();
+			return;
 		}
 	}
 
