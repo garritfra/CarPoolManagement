@@ -18,6 +18,7 @@ public class Menu {
 	CarPoolManagement carPoolManagement;
 	public static Menu instance;
 	Vehicle vehicle = new Vehicle(null, null, 0);
+	Data data = new Data();
 
 	// public static Menu getInstance() {
 	// if (Menu.instance == null) {
@@ -43,8 +44,9 @@ public class Menu {
 		System.out.println("2. list all vehicles \n");
 		System.out.println("3. create new reservation");
 		System.out.println("4. list all reservations");
+		System.out.println("5. Import or Export Vehicle Data");
 
-		io.getChoice();
+		selectOption(io.getChoice());
 		show();
 	}
 
@@ -99,9 +101,14 @@ public class Menu {
 			
 			
 			io.listReservationsForVehicle(vehicle);
-			this.show();
-
+			show();	//Show Menu
 			break;
+			
+		case 5:
+			//Open Import/Export Menu
+			data.menu(io);
+			break;
+		
 		default:
 
 			// Handle invalid inputs
