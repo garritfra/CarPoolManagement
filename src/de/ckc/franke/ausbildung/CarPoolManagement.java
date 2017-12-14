@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import de.ckc.franke.ausbildung.io.Data;
 import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
@@ -49,7 +48,7 @@ public class CarPoolManagement {
 	 * Program start
 	 */
 	void start(LinkedList<Vehicle> vehicleList) {
-		this.vehicleList = vehicleList;
+		CarPoolManagement.vehicleList = vehicleList;
 //		Data.toJSON(vehicleList);
 		
 		//Set Dateformat Constants to not lenient for date conversion

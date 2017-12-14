@@ -79,7 +79,7 @@ public class Menu {
 
 		case 2:
 			// list all vehicles
-			listVehicles(vehicle, carPoolManagement.vehicleList);
+			listVehicles(vehicle, CarPoolManagement.vehicleList);
 			System.out.println("press enter to continue");
 			scan.nextLine();
 
@@ -89,16 +89,16 @@ public class Menu {
 
 		case 3:
 			// list all vehicles for the user
-			listVehicles(vehicle, carPoolManagement.vehicleList);
+			listVehicles(vehicle, CarPoolManagement.vehicleList);
 			// create new reservation
 			newReservationDialog();
 			break;
 
 		case 4:
 			// list all reservations
-			listVehicles(vehicle, carPoolManagement.vehicleList);
+			listVehicles(vehicle, CarPoolManagement.vehicleList);
 			
-			vehicle = io.findVehicleForReservation(carPoolManagement.vehicleList);
+			vehicle = io.findVehicleForReservation(CarPoolManagement.vehicleList);
 			
 			
 			io.listReservationsForVehicle(vehicle);
@@ -141,7 +141,7 @@ public class Menu {
 					"├────────────────────────────┼────────────────────────────┼────────────────────────────┼───────────────┤%n");
 			String leftAlignFormat = "│ %-26s │ %-26s │ %-26s │ %-13d │ %n";
 
-			for (Vehicle entry : carPoolManagement.vehicleList) {
+			for (Vehicle entry : CarPoolManagement.vehicleList) {
 				int id = entry.getId();
 				String make = Utils.cutString(entry.getMake(), Constants.MAX_FIELD_LENGTH);
 				String model = Utils.cutString(entry.getModel(), Constants.MAX_FIELD_LENGTH);
@@ -177,7 +177,7 @@ public class Menu {
 		} else {
 			// retry if ID is out of bounds
 			try {
-				vehicle = carPoolManagement.vehicleList.get(Integer.parseInt(id));
+				vehicle = CarPoolManagement.vehicleList.get(Integer.parseInt(id));
 				boolean valid;
 
 				do { // while input not valid

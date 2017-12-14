@@ -7,8 +7,6 @@ import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
 
@@ -69,10 +67,10 @@ public class Data {
 
 			JSONObject vehicleObj = new JSONObject();
 
-			vehicleObj.put("Mileage", vehicle.getMileage());
-			vehicleObj.put("model", vehicle.getModel());
-			vehicleObj.put("make", vehicle.getMake());
 			vehicleObj.put("ID", vehicle.getId());
+			vehicleObj.put("make", vehicle.getMake());
+			vehicleObj.put("model", vehicle.getModel());
+			vehicleObj.put("Mileage", vehicle.getMileage());
 
 			arr.add(vehicleObj);
 		}
@@ -82,7 +80,7 @@ public class Data {
 			FileWriter file = new FileWriter("vehicles.json");
 			file.write(arr.toJSONString());
 			file.flush();
-			System.out.println("Data has been exported"); // TODO Add "'to ' + path"
+			System.out.println("Data has successfully been exported"); // TODO Add "'to ' + path"
 			file.close();
 
 		} catch (IOException e) {
