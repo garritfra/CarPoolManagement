@@ -38,6 +38,7 @@ public class Menu {
 	 */
 	public void show() {
 		// Cons.clear();
+		
 		System.out.println("\nCar Pool Management System");
 		System.out.println("-------------------");
 		System.out.println("1. create new vehicle");

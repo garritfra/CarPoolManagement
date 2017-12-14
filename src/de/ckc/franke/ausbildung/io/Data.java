@@ -1,7 +1,13 @@
 package de.ckc.franke.ausbildung.io;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import de.ckc.franke.ausbildung.model.Vehicle;
 
@@ -46,7 +52,40 @@ public class Data {
 	 * 
 	 * @param vehicleList
 	 */
-	public static void toCSV(LinkedList<Vehicle> vehicleList) {
+
+	/**
+	 * Converts a LinkedList to JSON
+	 * 
+	 * @param vehicleList
+	 */
+	@SuppressWarnings("unchecked")
+	public static void toJSON(LinkedList<Vehicle> vehicleList) {
+
+		JSONArray arr = new JSONArray();
+
+		for (Vehicle vehicle : vehicleList) {
+
+			JSONObject vehicleObj = new JSONObject();
+
+			vehicleObj.put("Mileage", vehicle.getMileage());
+			vehicleObj.put("model", vehicle.getModel());
+			vehicleObj.put("make", vehicle.getMake());
+			vehicleObj.put("ID", vehicle.getId());
+			
+			
+			arr.add(vehicleObj);
+		}
+
+		try {
+
+			FileWriter file = new FileWriter("vehicles.json");
+			file.write(arr.toJSONString());
+			file.flush();
+			file.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

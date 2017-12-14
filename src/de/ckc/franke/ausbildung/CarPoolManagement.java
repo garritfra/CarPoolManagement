@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import de.ckc.franke.ausbildung.io.Data;
 import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
@@ -49,26 +50,18 @@ public class CarPoolManagement {
 	 * Program start
 	 */
 	void start(LinkedList<Vehicle> vehicleList) {
-		
 		this.vehicleList = vehicleList;
-		
-		// TEST DATA
-//		Vehicle seat = new Vehicle("Ibiza", "Seat", 55000);
-//		seat.setId(seat.createID(vehicleList));
-//		vehicleList.add(seat);
-		
+//		Data.toJSON(vehicleList);
 		
 		//Set Dateformat Constants to not lenient for date conversion
 		Constants.DATE_LONG.setLenient(false);
 		Constants.DATE_SHORT.setLenient(false);
-
 		menu.show();
 	}
 
 	/**
 	 * Creates a new vehicle
 	 */
-
 	public void newReservation(Vehicle vehicle) {
 		Date dateStart = null;
 		Date dateEnd = null;
@@ -96,7 +89,6 @@ public class CarPoolManagement {
 		}
 
 		dateEnd = reservationEndMenu(dateInput, dateStart);
-
 		Reservation reservation = new Reservation(dateStart, dateEnd, vehicle);
 
 		LinkedList<Reservation> reservationList = vehicle.getReservationList();
@@ -172,7 +164,6 @@ public class CarPoolManagement {
 			Utils.flush();
 			System.err.println(e.getMessage());
 			newReservation(vehicle);
-
 		}
 
 		return time;
