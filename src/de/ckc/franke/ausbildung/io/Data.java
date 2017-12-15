@@ -113,8 +113,6 @@ public class Data {
 
 		// TODO
 		File file = new File(path);
-		String fileStr = file.toString();
-
 		return vehicleList;
 	}
 
