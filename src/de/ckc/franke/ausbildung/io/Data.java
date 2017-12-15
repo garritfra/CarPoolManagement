@@ -106,6 +106,15 @@ public class Data {
 		LinkedList<Vehicle> vehicleList = null;
 		// JSONObject vehiclesJSON;
 
+<<<<<<< HEAD
+=======
+		// System.out.println("Enter a path:");
+		// path = scan.nextLine().trim();
+		path = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
+
+		// TODO
+		File file = new File(path);
+>>>>>>> feature/ImportExport
 		return vehicleList;
 	}
 
