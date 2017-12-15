@@ -103,17 +103,8 @@ public class Data {
 	}
 
 	public static LinkedList<Vehicle> importJSON() {
-		String path;
 		LinkedList<Vehicle> vehicleList = null;
 		// JSONObject vehiclesJSON;
-
-		// System.out.println("Enter a path:");
-		// path = scan.nextLine().trim();
-		path = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
-
-		// TODO
-		File file = new File(path);
-		String fileStr = file.toString();
 
 		return vehicleList;
 	}
