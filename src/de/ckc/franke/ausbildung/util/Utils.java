@@ -180,7 +180,6 @@ public class Utils {
 
 	private static boolean dateExists(Date date) {
 
-		//TODO Validation should be at input
 		try {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		sdf.setLenient(false);

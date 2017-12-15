@@ -16,14 +16,14 @@ public class Io {
 	Controller controller;
 	Vehicle vehicle;
 	Scanner scan = new Scanner(System.in);
-	private static Io instance;
+//	private static Io instance;
 	
-	public static Io getInstance() {
-		if (instance == null) {
-			instance = new Io();
-		}
-		return instance;
-	}
+//	public static Io getInstance() {
+//		if (instance == null) {
+//			instance = new Io();
+//		}
+//		return instance;
+//	}
 	
 	
 
@@ -66,6 +66,8 @@ public class Io {
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("ID not found");
 			listReservationsForVehicle(vehicle);
+			
+			
 		}
 		return vehicle;
 	}
@@ -104,8 +106,17 @@ public class Io {
 		return;
 	}
 
+	public int getChoice() {
 
-
+		String choice = scan.nextLine();
+		if (Utils.isDigit(choice.trim())) {
+			int number = Integer.parseInt(choice.trim());
+			return number;
+		} else {
+			System.err.println("Invalid Input");
+			return 0;
+		}
+	}
 
 
 }

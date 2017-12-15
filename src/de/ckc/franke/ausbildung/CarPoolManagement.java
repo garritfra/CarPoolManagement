@@ -14,12 +14,11 @@ import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
-
 public class CarPoolManagement {
 	Scanner scan = new Scanner(System.in);
 	// Utils utils = new Utils();
 	Vehicle vehicle;
-	Io io = Io.getInstance();
+	Io io = new Io();
 	Menu menu = new Menu(this, io, scan);
 	Controller controller = new Controller(this, menu);
 	Reservation reservation;
@@ -35,7 +34,7 @@ public class CarPoolManagement {
 	boolean err;
 	int mileage = 0;
 
-	public LinkedList<Vehicle> vehicleList;
+	public static LinkedList<Vehicle> vehicleList;
 
 	// CarPoolManagement() {}
 
@@ -49,26 +48,18 @@ public class CarPoolManagement {
 	 * Program start
 	 */
 	void start(LinkedList<Vehicle> vehicleList) {
-		
-		this.vehicleList = vehicleList;
-		
-		// TEST DATA
-//		Vehicle seat = new Vehicle("Ibiza", "Seat", 55000);
-//		seat.setId(seat.createID(vehicleList));
-//		vehicleList.add(seat);
-		
+		CarPoolManagement.vehicleList = vehicleList;
+//		Data.toJSON(vehicleList);
 		
 		//Set Dateformat Constants to not lenient for date conversion
 		Constants.DATE_LONG.setLenient(false);
 		Constants.DATE_SHORT.setLenient(false);
-
 		menu.show();
 	}
 
 	/**
 	 * Creates a new vehicle
 	 */
-
 	public void newReservation(Vehicle vehicle) {
 		Date dateStart = null;
 		Date dateEnd = null;
@@ -96,7 +87,6 @@ public class CarPoolManagement {
 		}
 
 		dateEnd = reservationEndMenu(dateInput, dateStart);
-
 		Reservation reservation = new Reservation(dateStart, dateEnd, vehicle);
 
 		LinkedList<Reservation> reservationList = vehicle.getReservationList();
@@ -159,8 +149,6 @@ public class CarPoolManagement {
 	}
 
 	/**
-	 * validates, if a string is equal to a date format TODO add validation for
-	 * correct date
 	 * 
 	 * @param dateInput
 	 * 
@@ -174,7 +162,6 @@ public class CarPoolManagement {
 			Utils.flush();
 			System.err.println(e.getMessage());
 			newReservation(vehicle);
-
 		}
 
 		return time;

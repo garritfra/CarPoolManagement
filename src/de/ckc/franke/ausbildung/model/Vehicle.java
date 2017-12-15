@@ -84,7 +84,6 @@ public class Vehicle {
 			this.id = 0;
 		}
 		
-
 		return this.id;
 
 	}
