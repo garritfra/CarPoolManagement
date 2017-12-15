@@ -70,25 +70,28 @@ public class Data {
 
 		for (Vehicle vehicle : vehicleList) {
 
-			JSONObject vehicleObj = new JSONObject();
+			JSONObject vehicleObj = new JSONObject();	//Create new vehicle JSON Object
 
 			vehicleObj.put("ID", vehicle.getId());
 			vehicleObj.put("make", vehicle.getMake());
 			vehicleObj.put("model", vehicle.getModel());
 			vehicleObj.put("Mileage", vehicle.getMileage());
 
-			arr.add(vehicleObj);
+			arr.add(vehicleObj);	//add vehicle to parent array
 		}
 
 		String path;
-		String JSONString = arr.toJSONString();
+		String JSONString = arr.toJSONString();	//Convert JSON Array to string
 		
 		
+		//Get custom path from user
 		System.out.println("export to path:");
-
 		path = scan.nextLine().trim();
 
+		//Create file Object
 		File file = new File(path, "vehicles.txt");
+		
+		//If the file does not exist -> create it
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -97,6 +100,7 @@ public class Data {
 			}
 		}
 		try {
+			//Create file string before actually writing it to the file 
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
 			bw.write(JSONString);
 			bw.close();
