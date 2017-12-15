@@ -16,14 +16,14 @@ public class Io {
 	Controller controller;
 	Vehicle vehicle;
 	Scanner scan = new Scanner(System.in);
-	private static Io instance;
+//	private static Io instance;
 	
-	public static Io getInstance() {
-		if (instance == null) {
-			instance = new Io();
-		}
-		return instance;
-	}
+//	public static Io getInstance() {
+//		if (instance == null) {
+//			instance = new Io();
+//		}
+//		return instance;
+//	}
 	
 	
 

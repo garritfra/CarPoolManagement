@@ -18,7 +18,7 @@ public class CarPoolManagement {
 	Scanner scan = new Scanner(System.in);
 	// Utils utils = new Utils();
 	Vehicle vehicle;
-	Io io = Io.getInstance();
+	Io io = new Io();
 	Menu menu = new Menu(this, io, scan);
 	Controller controller = new Controller(this, menu);
 	Reservation reservation;
