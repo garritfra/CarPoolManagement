@@ -1,5 +1,8 @@
 package de.ckc.franke.ausbildung.io;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -9,10 +12,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
+import de.ckc.franke.ausbildung.util.Console;
+import de.ckc.franke.ausbildung.util.Utils;
 
 public class Data {
 
-	Scanner scan = new Scanner(System.in);
+	static Scanner scan = new Scanner(System.in);
 	Io io;
 
 	public void menu(Io io) {
@@ -75,14 +80,26 @@ public class Data {
 			arr.add(vehicleObj);
 		}
 
+		String path;
+		String JSONString = arr.toJSONString();
+		
+		
+		System.out.println("export to path:");
+
+		path = scan.nextLine().trim();
+
+		File file = new File(path, "vehicles.txt");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		try {
-
-			FileWriter file = new FileWriter("vehicles.json");
-			file.write(arr.toJSONString());
-			file.flush();
-			System.out.println("Data has successfully been exported"); // TODO Add "'to ' + path"
-			file.close();
-
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
+			bw.write(JSONString);
+			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
