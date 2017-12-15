@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
+import enums.ErrorCode;
 
 public class Data {
 
@@ -43,7 +44,8 @@ public class Data {
 			break;
 		default:
 			// Handle invalid inputs
-			System.err.println("Input not valid");
+			ErrorCode err = ErrorCode.INVALID_INPUT;
+			System.err.println(err);
 			menu(io);
 		}
 	}

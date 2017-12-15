@@ -66,6 +66,8 @@ public class Io {
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("ID not found");
 			listReservationsForVehicle(vehicle);
+			
+			
 		}
 		return vehicle;
 	}
