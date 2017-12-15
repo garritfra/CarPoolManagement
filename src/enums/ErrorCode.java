@@ -1,0 +1,7 @@
+package enums;
+
+public enum ErrorCode {
+
+	NOT_A_NUMBER, INVALID_INPUT, NO_RESERVATIONS, INVALID_ID, ID_NOT_FOUND, NO_VEHICLES, INVALID_DATE;
+
+}
