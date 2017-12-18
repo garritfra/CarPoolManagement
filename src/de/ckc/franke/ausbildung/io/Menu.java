@@ -181,42 +181,42 @@ public class Menu {
 		Vehicle vehicle = null;
 
 		System.out.println("create new reservation for vehicle: ");
-		String id = scan.nextLine().trim();
-
+		String idStr = scan.nextLine().trim();
 		// retry if ID is not a number
-		if (!Utils.isDigit(id)) {
+		if (!Utils.isDigit(idStr)) {
 			Utils.flush();
-			System.err.println("ID is not valid\n");
+			System.err.println("Enter a valid ID\n");
+			Utils.flush();
 			newReservationDialog();
 		} else {
+			int id = Integer.parseInt(idStr);
 			// retry if ID is out of bounds
-			try {
-				vehicle = CarPoolManagement.vehicleList.get(Integer.parseInt(id));
-				// Output selected vehicle and validation
-				System.out.println(vehicle.getMake() + " " + vehicle.getModel());
-
-				// Ask user if the vehicle is correct
-				System.out.println("Is this correct? (Y/N)");
-				String choice = scan.nextLine();
-				if (choice.trim().equals("Y") || choice.trim().equals("y")) {
-					// Yes
-					// return the vehicle
-					return vehicle;
-				} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
-					// No
-					showSelectVehicleDialog();
-				} else {
-					// Invalid Option
-					System.err.println("Invalid input");
-					showSelectVehicleDialog();
-				}
-
-			} catch (IndexOutOfBoundsException e) {
-				Utils.flush();
+			if (id > CarPoolManagement.vehicleList.size() || id < CarPoolManagement.vehicleList.indexOf(0)) {
 				System.err.println("Vehicle ID not found\n");
-				newReservationDialog();
-
+				showSelectVehicleDialog();
 			}
+
+			vehicle = CarPoolManagement.vehicleList.get(id);
+
+			// Output selected vehicle and validation
+			System.out.println(vehicle.getMake() + " " + vehicle.getModel());
+
+			// Ask user if the vehicle is correct
+			System.out.println("Is this correct? (Y/N)");
+			String choice = scan.nextLine();
+			if (choice.trim().equals("Y") || choice.trim().equals("y")) {
+				// Yes
+				// return the vehicle
+				return vehicle;
+			} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
+				// No
+				showSelectVehicleDialog();
+			} else {
+				// Invalid Option
+				System.err.println("Invalid input");
+				showSelectVehicleDialog();
+			}
+
 		}
 
 		return vehicle;
@@ -323,9 +323,9 @@ public class Menu {
 		}
 
 		reservationList.add(reservation);
-		
+
 		vehicle.setReservationList(reservationList);
-		
+
 		System.out.println("Reservation has been saved");
 		showMenu();
 
