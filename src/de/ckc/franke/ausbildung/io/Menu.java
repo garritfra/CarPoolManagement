@@ -163,7 +163,16 @@ public class Menu {
 	public void newReservationDialog() {
 		// Console.clear();
 
-		Vehicle vehicle;
+		showSelectVehicleDialog();
+
+		showSelectStartDialog();
+
+		showSelectEndDialog();
+
+	}
+
+	private Vehicle showSelectVehicleDialog() {
+		Vehicle vehicle = null;
 
 		System.out.println("create new reservation for vehicle: ");
 		String id = scan.nextLine().trim();
@@ -179,29 +188,24 @@ public class Menu {
 				vehicle = CarPoolManagement.vehicleList.get(Integer.parseInt(id));
 				boolean valid;
 
-				do { // while input not valid
+				// Output selected vehicle and validation
+				System.out.println(vehicle.getMake() + " " + vehicle.getModel());
 
-					// Output selected vehicle and validation
-					System.out.println(vehicle.getMake() + " " + vehicle.getModel());
-					System.out.println("Is this correct? (Y/N)");
-
-					// Check user validation
-					String choice = scan.nextLine();
-					if (choice.trim().equals("Y") || choice.trim().equals("y")) {
-						// Yes
-						carPoolManagement.newReservation(vehicle);
-
-						valid = true;
-					} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
-						// No
-						valid = true;
-						newReservationDialog();
-					} else {
-						// Invalid Option
-
-						valid = false;
-					}
-				} while (!valid);
+				// Ask user if the vehicle is correct
+				System.out.println("Is this correct? (Y/N)");
+				String choice = scan.nextLine();
+				if (choice.trim().equals("Y") || choice.trim().equals("y")) {
+					// Yes
+					//return the vehicle
+					return vehicle;
+				} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
+					// No
+					showSelectVehicleDialog();
+				} else {
+					// Invalid Option
+					System.err.println("Invalid input");
+					showSelectVehicleDialog();
+				}
 
 			} catch (IndexOutOfBoundsException e) {
 				Utils.flush();
@@ -210,6 +214,17 @@ public class Menu {
 
 			}
 		}
+
+		return vehicle;
+	}
+
+	private void showSelectStartDialog() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void showSelectEndDialog() {
+		// TODO Auto-generated method stub
 
 	}
 
