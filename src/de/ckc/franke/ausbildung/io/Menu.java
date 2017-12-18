@@ -186,8 +186,6 @@ public class Menu {
 			// retry if ID is out of bounds
 			try {
 				vehicle = CarPoolManagement.vehicleList.get(Integer.parseInt(id));
-				boolean valid;
-
 				// Output selected vehicle and validation
 				System.out.println(vehicle.getMake() + " " + vehicle.getModel());
 
@@ -196,7 +194,7 @@ public class Menu {
 				String choice = scan.nextLine();
 				if (choice.trim().equals("Y") || choice.trim().equals("y")) {
 					// Yes
-					//return the vehicle
+					// return the vehicle
 					return vehicle;
 				} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
 					// No
