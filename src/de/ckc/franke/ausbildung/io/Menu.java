@@ -191,7 +191,7 @@ public class Menu {
 		} else {
 			int id = Integer.parseInt(idStr);
 			// retry if ID is out of bounds
-			if (id > CarPoolManagement.vehicleList.size() || id < CarPoolManagement.vehicleList.indexOf(0)) {
+			if (id > CarPoolManagement.vehicleList.size() || id < 0) {
 				System.err.println("Vehicle ID not found\n");
 				showSelectVehicleDialog();
 			}
