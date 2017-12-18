@@ -18,6 +18,7 @@ public class Menu {
 	CarPoolManagement carPoolManagement;
 	public static Menu instance;
 	Vehicle vehicle = new Vehicle(null, null, 0);
+	Data data = new Data();
 
 	// public static Menu getInstance() {
 	// if (Menu.instance == null) {
@@ -37,27 +38,30 @@ public class Menu {
 	 */
 	public void show() {
 		// Cons.clear();
+
 		System.out.println("\nCar Pool Management System");
 		System.out.println("-------------------");
 		System.out.println("1. create new vehicle");
 		System.out.println("2. list all vehicles \n");
 		System.out.println("3. create new reservation");
 		System.out.println("4. list all reservations");
+		System.out.println("5. Import or Export Vehicle Data");
 
-		getChoice();
+		selectOption(io.getChoice());
+		show();
 	}
 
-	public void getChoice() {
-
-		String choice = scan.nextLine();
-		if (Utils.isDigit(choice.trim())) {
-			int number = Integer.parseInt(choice.trim());
-			this.selectOption(number);
-		} else {
-			System.err.println("Invalid Input");
-			show();
-		}
-	}
+	// public void getChoice() {
+	//
+	// String choice = scan.nextLine();
+	// if (Utils.isDigit(choice.trim())) {
+	// int number = Integer.parseInt(choice.trim());
+	// this.selectOption(number);
+	// } else {
+	// System.err.println("Invalid Input");
+	// return;
+	// }
+	// }
 
 	/**
 	 * checks selection of menu
@@ -75,7 +79,7 @@ public class Menu {
 
 		case 2:
 			// list all vehicles
-			listVehicles(vehicle, carPoolManagement.vehicleList);
+			listVehicles(vehicle, CarPoolManagement.vehicleList);
 			System.out.println("press enter to continue");
 			scan.nextLine();
 
@@ -85,18 +89,26 @@ public class Menu {
 
 		case 3:
 			// list all vehicles for the user
-			listVehicles(vehicle, carPoolManagement.vehicleList);
+			listVehicles(vehicle, CarPoolManagement.vehicleList);
 			// create new reservation
 			newReservationDialog();
 			break;
 
 		case 4:
 			// list all reservations
-			listVehicles(vehicle, carPoolManagement.vehicleList);
-			vehicle.listReservations(vehicle, carPoolManagement);
-			this.show();
+			listVehicles(vehicle, CarPoolManagement.vehicleList);
 
+			vehicle = io.findVehicleForReservation(CarPoolManagement.vehicleList);
+
+			io.listReservationsForVehicle(vehicle);
+			show(); // Show Menu
 			break;
+
+		case 5:
+			// Open Import/Export Menu
+			data.menu(io);
+			break;
+
 		default:
 
 			// Handle invalid inputs
@@ -114,7 +126,7 @@ public class Menu {
 	 *            TODO
 	 */
 	public void listVehicles(Vehicle vehicle, LinkedList<Vehicle> vehicleList) {
-		
+
 		// if no vehicles were found, return to menu
 		if (vehicleList.isEmpty()) {
 			System.err.println("No vehicles defined");
@@ -128,7 +140,7 @@ public class Menu {
 					"├────────────────────────────┼────────────────────────────┼────────────────────────────┼───────────────┤%n");
 			String leftAlignFormat = "│ %-26s │ %-26s │ %-26s │ %-13d │ %n";
 
-			for (Vehicle entry : carPoolManagement.vehicleList) {
+			for (Vehicle entry : CarPoolManagement.vehicleList) {
 				int id = entry.getId();
 				String make = Utils.cutString(entry.getMake(), Constants.MAX_FIELD_LENGTH);
 				String model = Utils.cutString(entry.getModel(), Constants.MAX_FIELD_LENGTH);
@@ -158,12 +170,13 @@ public class Menu {
 
 		// retry if ID is not a number
 		if (!Utils.isDigit(id)) {
+			Utils.flush();
 			System.err.println("ID is not valid\n");
 			newReservationDialog();
 		} else {
 			// retry if ID is out of bounds
 			try {
-				vehicle = carPoolManagement.vehicleList.get(Integer.parseInt(id));
+				vehicle = CarPoolManagement.vehicleList.get(Integer.parseInt(id));
 				boolean valid;
 
 				do { // while input not valid
@@ -191,6 +204,7 @@ public class Menu {
 				} while (!valid);
 
 			} catch (IndexOutOfBoundsException e) {
+				Utils.flush();
 				System.err.println("Vehicle ID not found\n");
 				newReservationDialog();
 
@@ -198,6 +212,5 @@ public class Menu {
 		}
 
 	}
-
 
 }
