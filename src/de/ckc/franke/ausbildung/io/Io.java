@@ -76,7 +76,7 @@ public class Io {
 	 */
 	public void listReservationsForVehicle(Vehicle vehicle) {
 
-
+		LinkedList<Reservation> reservationList = vehicle.getReservationList();
 		if (vehicle.getReservationList().isEmpty()) {
 			Utils.flush();
 			System.err.println("No reservations found");
@@ -89,7 +89,7 @@ public class Io {
 		System.out.format("├────────────────────────────────┼────────────────────────────────┤%n");
 		String leftAlignFormat = "│ %-30s │ %-30s │%n";
 
-		for (Reservation reservation : vehicle.getReservationList()) {
+		for (Reservation reservation : reservationList) {
 			String beginnDate = reservation.getBeginnDate().toString();
 			String endDate = reservation.getEndDate().toString();
 

@@ -107,13 +107,13 @@ public class Data {
 	}
 
 	public static void importJSON() {
-		//Reset Vehicle List to prevent duplicate entries
+		// Reset Vehicle List to prevent duplicate entries
 		CarPoolManagement.vehicleList.clear();
-		
-		// JSONObject vehiclesJSON;
-		// System.out.println("Enter a path:");
-		// path = scan.nextLine().trim();
-		String path = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
+
+		System.out.println("Enter a path:");
+		String path = scan.nextLine().trim();
+		// String path =
+		// "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
 		JSONParser parser = new JSONParser();
 
 		Object obj;
@@ -130,7 +130,7 @@ public class Data {
 			e.printStackTrace();
 		}
 
-		//CarPoolManagement.vehicleList = vehicleList;
+		// CarPoolManagement.vehicleList = vehicleList;
 	}
 
 	private static void populateVehicleListFromJSON(JSONArray JSONArr) {
@@ -158,7 +158,7 @@ public class Data {
 
 			vehicle = new Vehicle(model, make, mileage);
 			CarPoolManagement.vehicleList.addLast(vehicle);
-			
+
 		}
 
 	}
