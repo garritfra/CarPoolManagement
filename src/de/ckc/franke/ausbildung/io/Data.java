@@ -2,12 +2,17 @@ package de.ckc.franke.ausbildung.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import enums.ErrorCode;
@@ -36,7 +41,7 @@ public class Data {
 		switch (userInput) {
 		case 1:
 			// TODO Import File
-			CarPoolManagement.vehicleList = Data.importJSON();
+			Data.importJSON();
 			break;
 
 		case 2:
@@ -57,7 +62,6 @@ public class Data {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void exportJSON(LinkedList<Vehicle> vehicleList) {
-		
 
 		JSONArray arr = new JSONArray();
 
@@ -68,7 +72,7 @@ public class Data {
 			vehicleObj.put("ID", vehicle.getId());
 			vehicleObj.put("make", vehicle.getMake());
 			vehicleObj.put("model", vehicle.getModel());
-			vehicleObj.put("Mileage", vehicle.getMileage());
+			vehicleObj.put("mileage", vehicle.getMileage());
 
 			arr.add(vehicleObj); // add vehicle to parent array
 		}
@@ -102,20 +106,81 @@ public class Data {
 
 	}
 
-	public static LinkedList<Vehicle> importJSON() {
-		LinkedList<Vehicle> vehicleList = null;
+	public static void importJSON() {
+		//Reset Vehicle List to prevent duplicate entries
+		CarPoolManagement.vehicleList.clear();
+		
 		// JSONObject vehiclesJSON;
-
-<<<<<<< HEAD
-=======
 		// System.out.println("Enter a path:");
 		// path = scan.nextLine().trim();
-		path = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
+		String path = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
+		JSONParser parser = new JSONParser();
 
-		// TODO
-		File file = new File(path);
->>>>>>> feature/ImportExport
-		return vehicleList;
+		Object obj;
+		JSONArray JSONArr;
+
+		try {
+			obj = parser.parse(new FileReader(path));
+			JSONArr = (JSONArray) obj;
+
+			populateVehicleListFromJSON(JSONArr);
+
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//CarPoolManagement.vehicleList = vehicleList;
+	}
+
+	private static void populateVehicleListFromJSON(JSONArray JSONArr) {
+
+		Vehicle vehicle;
+		JSONObject vehicleObj;
+		String make;
+		String model;
+		String mileageStr;
+		int mileage;
+
+		// For every entry in array
+		for (int index = 0; index < JSONArr.size(); index++) {
+
+			// get vehicle as object
+			vehicleObj = (JSONObject) JSONArr.get(index);
+
+			// Assign variables to locally defined attributes
+			make = vehicleObj.get("make").toString();
+			model = vehicleObj.get("model").toString();
+			mileageStr = vehicleObj.get("mileage").toString();
+
+			// Convert mileage to Integer
+			mileage = Integer.parseInt(mileageStr);
+
+			vehicle = new Vehicle(model, make, mileage);
+			CarPoolManagement.vehicleList.addLast(vehicle);
+			
+		}
+
+	}
+
+	public static void pupulateVehicleListFromArgs(String[] args, LinkedList<Vehicle> vehicleList) {
+		String[] vehicleAttr = null;
+		for (String s : args) {
+			vehicleAttr = s.split(",");
+
+			String model = vehicleAttr[0];
+			String make = vehicleAttr[1];
+			int mileage = Integer.parseInt(vehicleAttr[2]);
+
+			Vehicle vehicle = new Vehicle(model, make, mileage);
+
+			vehicle.createID(vehicleList);
+
+			vehicleList.addLast(vehicle);
+
+			// Reset vehicle to prevent wrong entries
+			vehicle = null;
+		}
 	}
 
 }

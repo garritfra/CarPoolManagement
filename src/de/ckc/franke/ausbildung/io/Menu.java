@@ -38,7 +38,7 @@ public class Menu {
 	 */
 	public void show() {
 		// Cons.clear();
-		
+
 		System.out.println("\nCar Pool Management System");
 		System.out.println("-------------------");
 		System.out.println("1. create new vehicle");
@@ -51,17 +51,17 @@ public class Menu {
 		show();
 	}
 
-//	public void getChoice() {
-//
-//		String choice = scan.nextLine();
-//		if (Utils.isDigit(choice.trim())) {
-//			int number = Integer.parseInt(choice.trim());
-//			this.selectOption(number);
-//		} else {
-//			System.err.println("Invalid Input");
-//			return;
-//		}
-//	}
+	// public void getChoice() {
+	//
+	// String choice = scan.nextLine();
+	// if (Utils.isDigit(choice.trim())) {
+	// int number = Integer.parseInt(choice.trim());
+	// this.selectOption(number);
+	// } else {
+	// System.err.println("Invalid Input");
+	// return;
+	// }
+	// }
 
 	/**
 	 * checks selection of menu
@@ -97,19 +97,18 @@ public class Menu {
 		case 4:
 			// list all reservations
 			listVehicles(vehicle, CarPoolManagement.vehicleList);
-			
+
 			vehicle = io.findVehicleForReservation(CarPoolManagement.vehicleList);
-			
-			
+
 			io.listReservationsForVehicle(vehicle);
-			show();	//Show Menu
+			show(); // Show Menu
 			break;
-			
+
 		case 5:
-			//Open Import/Export Menu
+			// Open Import/Export Menu
 			data.menu(io);
 			break;
-		
+
 		default:
 
 			// Handle invalid inputs
@@ -127,7 +126,7 @@ public class Menu {
 	 *            TODO
 	 */
 	public void listVehicles(Vehicle vehicle, LinkedList<Vehicle> vehicleList) {
-		
+
 		// if no vehicles were found, return to menu
 		if (vehicleList.isEmpty()) {
 			System.err.println("No vehicles defined");
@@ -213,8 +212,5 @@ public class Menu {
 		}
 
 	}
-	
-
-
 
 }
