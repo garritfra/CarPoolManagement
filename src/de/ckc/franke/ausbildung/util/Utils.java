@@ -69,27 +69,19 @@ public class Utils {
 	 * @throws Exception
 	 * @throws ParseException
 	 */
-	public static Calendar convertDate(String dateInput) throws Exception {
+	public static Calendar convertDate(String dateInput) throws ParseException {
 
 		Calendar cal = Calendar.getInstance();
 		if (dateInput.toString().length() > 10) {
 			// user probably specified a time
 
-			try {
 				cal.setTime(Constants.DATE_LONG.parse(dateInput));
-			} catch (Exception e) {
-				System.err.println("Invalid date");
-
-			}
+			
 
 		} else {
-			// user probably didn't specify a time
-			try {
+				
 				cal.setTime(Constants.DATE_SHORT.parse(dateInput));
-			} catch (Exception e) {
-				System.err.println();
-				throw new Exception("Invalid date");
-			}
+			
 		}
 
 		return cal;
@@ -188,7 +180,6 @@ public class Utils {
 
 	private static boolean dateExists(Date date) {
 
-		//TODO Formatter should be at input
 		try {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		sdf.setLenient(false);
@@ -210,4 +201,10 @@ public class Utils {
 		// return true, if end date is before begin date
 		return dateEnd.before(dateBegin);
 	}
+	
+	public static void flush() {
+		System.out.flush();
+		System.err.flush();
+	}
+	
 }
