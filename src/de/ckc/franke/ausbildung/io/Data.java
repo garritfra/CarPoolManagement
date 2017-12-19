@@ -159,6 +159,7 @@ public class Data {
 			make = vehicleObj.get("make").toString();
 			model = vehicleObj.get("model").toString();
 			mileageStr = vehicleObj.get("mileage").toString();
+			
 
 			// Convert mileage to Integer
 			mileage = Integer.parseInt(mileageStr);

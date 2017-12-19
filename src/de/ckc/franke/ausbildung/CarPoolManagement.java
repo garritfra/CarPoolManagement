@@ -57,13 +57,15 @@ public class CarPoolManagement {
 
 	public void newVehicle() {
 
+		// Get Make input
 		System.out.println("Manufacturer:");
-
 		String make = scan.nextLine();
 
+		// Get model input
 		System.out.println("Model:");
 		String model = scan.nextLine();
 
+		// get mileage input
 		mileage = io.getMilageInput();
 
 		Vehicle vehicle = new Vehicle(model, make, mileage);

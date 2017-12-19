@@ -1,6 +1,8 @@
 package de.ckc.franke.ausbildung.model;
 
 import java.util.LinkedList;
+
+import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.util.Utils;
 
 public class Vehicle {
@@ -9,13 +11,13 @@ public class Vehicle {
 	private int mileage;
 	public int id;
 	private LinkedList<Reservation> reservationList;
-//	public Scanner scan = new Scanner(System.in);
-//	public CarPoolManagement carPoolManagement;
-//	Io io;
-//	public Menu menu;
-//	public Controller controller;
+	// public Scanner scan = new Scanner(System.in);
+	// public CarPoolManagement carPoolManagement;
+	// Io io;
+	// public Menu menu;
+	// public Controller controller;
 	Utils utils;
-//	public LinkedList<Vehicle> vehicleList;
+	// public LinkedList<Vehicle> vehicleList;
 
 	/**
 	 * Vehicle Constructor
@@ -27,7 +29,7 @@ public class Vehicle {
 
 	public Vehicle(String model, String make, int mileage) {
 
-		// this.id = id;
+		this.id = createID(CarPoolManagement.vehicleList);
 		this.model = model;
 		this.make = make;
 		this.mileage = mileage;
@@ -74,16 +76,14 @@ public class Vehicle {
 		this.reservationList = reservationList;
 	}
 
-
-
 	public int createID(LinkedList<Vehicle> vehicleList) {
 
-		this.id = vehicleList.size();
-		
-		if(vehicleList.size() == 0) {
+		try {
+			this.id = vehicleList.size();
+		} catch (NullPointerException e) {//catch if vehicleList is not yet initialized
 			this.id = 0;
 		}
-		
+
 		return this.id;
 
 	}
