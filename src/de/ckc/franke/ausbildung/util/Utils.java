@@ -73,16 +73,16 @@ public class Utils {
 	public static Calendar convertDate(String dateInput) throws ParseException {
 
 		Calendar cal = Calendar.getInstance();
-			if (dateInput.toString().length() > 10) {
-				// user probably specified a time
+		if (dateInput.toString().length() > 10) {
+			// user probably specified a time
 
-				cal.setTime(Constants.DATE_LONG.parse(dateInput));
+			cal.setTime(Constants.DATE_LONG.parse(dateInput));
 
-			} else {
+		} else {
 
-				cal.setTime(Constants.DATE_SHORT.parse(dateInput));
+			cal.setTime(Constants.DATE_SHORT.parse(dateInput));
 
-			}
+		}
 
 		return cal;
 
@@ -127,9 +127,20 @@ public class Utils {
 	}
 
 	/**
-	 * Returns true, if the reservation overlaps with any other reservation
+	 * Returns true, if the reservation overlaps with any other reservation TODO
+	 * Java Doc
 	 * 
-	 * @param utils
+	 * return true, if beginning of entered reservation is after beginning of
+	 * reservation-iterate and beginning of entered reservation is before end of
+	 * reservation-iterate
+	 * 
+	 * or end of entered reservation is after beginning of reservation-iterate and
+	 * end of entered reservation is before end of reservation-iterate
+	 * 
+	 * or begin of entered reservation is before beginning of reservation-iterate
+	 * and end of entered reservation is after end of reservation iterate
+	 * 
+	 * @param reservation
 	 * @param reservationList
 	 * @return
 	 */
@@ -169,6 +180,13 @@ public class Utils {
 
 	}
 
+	/**
+	 * returns true if a date is in the future
+	 * 
+	 * 
+	 * @param date
+	 * @return boolean
+	 */
 	public static boolean isInFuture(Date date) {
 
 		Calendar cal = Calendar.getInstance();
