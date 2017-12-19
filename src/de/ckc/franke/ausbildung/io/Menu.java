@@ -243,8 +243,6 @@ public class Menu {
 		} else {
 			try {
 				// Format time from string to date
-
-				Utils.flush();
 				dateStart = Utils.convertDate(dateInput).getTime();
 				Utils.flush();
 				return dateStart;
@@ -252,10 +250,7 @@ public class Menu {
 			} catch (ParseException e) {
 				System.err.println("date has an invalid format");
 				Utils.flush();
-				showSelectStartDialog();
-
-				// return null if error
-				return null;
+				return showSelectStartDialog();
 			}
 		}
 
