@@ -65,17 +65,11 @@ public class CarPoolManagement {
 		System.out.println("Model:");
 		String model = scan.nextLine();
 
-		try {
-			mileage = io.getMilageInput();
-		} catch (Exception e) {
-			Utils.flush();
-			System.err.println(e.getMessage());
-			newVehicle();
-		}
+		mileage = io.getMilageInput();
+
 		Vehicle vehicle = new Vehicle(model, make, mileage);
 		vehicle.setId(vehicleList.size());
 		vehicleList.addLast(vehicle);
 		controller.addVehicleSuccess();
 	}
-
 }

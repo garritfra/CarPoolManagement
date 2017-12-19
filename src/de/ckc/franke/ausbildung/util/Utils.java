@@ -2,6 +2,7 @@ package de.ckc.franke.ausbildung.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -66,24 +67,22 @@ public class Utils {
 	 * converts a string to either a date or date and time
 	 * 
 	 * @param dateInput
-	 * @return
-	 * @throws Exception
+	 * @return calendar
 	 * @throws ParseException
 	 */
 	public static Calendar convertDate(String dateInput) throws ParseException {
 
 		Calendar cal = Calendar.getInstance();
-		if (dateInput.toString().length() > 10) {
-			// user probably specified a time
+			if (dateInput.toString().length() > 10) {
+				// user probably specified a time
 
 				cal.setTime(Constants.DATE_LONG.parse(dateInput));
-			
 
-		} else {
-				
+			} else {
+
 				cal.setTime(Constants.DATE_SHORT.parse(dateInput));
-			
-		}
+
+			}
 
 		return cal;
 
@@ -97,10 +96,10 @@ public class Utils {
 	}
 
 	public static void validateReservation(Reservation reservation, Vehicle vehicle, Date dateStart, Date dateEnd,
-			LinkedList<Reservation> reservationList) throws Exception {
+			LinkedList<Reservation> reservationList) throws DateTimeException {
 		// Check if vehicle is already booked
 		if (isDuplicate(reservation, reservationList)) {
-			throw new Exception("The vehicle is already booked for this date");
+			throw new DateTimeException("The vehicle is already booked for this date");
 		}
 
 		// Check if date is not in the future
@@ -111,19 +110,19 @@ public class Utils {
 			// upon validation
 			cal.add(Calendar.MINUTE, -10);
 			if (!cal.getTime().before(dateStart)) {
-				throw new Exception("The date you entered is in the past");
+				throw new DateTimeException("The date you entered is in the past");
 			}
 
 		}
 
 		// Check if begin is after end date
 		if (EndBeforeBegin(dateStart, dateEnd)) {
-			throw new Exception("The end date can not be before the begin date");
+			throw new DateTimeException("The end date can not be before the begin date");
 		}
 
 		// Check if date exists
 		if (!dateExists(dateStart) || !dateExists(dateEnd)) {
-			throw new Exception("You have entered a invalid date");
+			throw new DateTimeException("You have entered a invalid date");
 		}
 	}
 
@@ -182,11 +181,10 @@ public class Utils {
 	private static boolean dateExists(Date date) {
 
 		try {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-		sdf.setLenient(false);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+			sdf.setLenient(false);
 
-		String dateAsString = sdf.format(date);
-
+			String dateAsString = sdf.format(date);
 
 			sdf.parse(dateAsString);
 		} catch (ParseException e) {
@@ -202,7 +200,7 @@ public class Utils {
 		// return true, if end date is before begin date
 		return dateEnd.before(dateBegin);
 	}
-	
+
 	public static void flush() {
 		System.out.flush();
 		System.err.flush();
@@ -212,5 +210,5 @@ public class Utils {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
