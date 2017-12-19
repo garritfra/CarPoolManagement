@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
@@ -205,6 +206,12 @@ public class Utils {
 	public static void flush() {
 		System.out.flush();
 		System.err.flush();
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }
