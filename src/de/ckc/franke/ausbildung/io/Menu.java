@@ -125,9 +125,9 @@ public class Menu {
 	 * list all vehicles
 	 * 
 	 * @param vehicle
-	 *            
+	 * 
 	 * @param vehicleList
-	 *            
+	 * 
 	 */
 	public void listVehicles(Vehicle vehicle, LinkedList<Vehicle> vehicleList) {
 
@@ -168,12 +168,16 @@ public class Menu {
 		Date dateStart;
 		Date dateEnd;
 
+		// get vehicle for reservation
 		vehicle = showSelectVehicleDialog();
 
+		// get starting date
 		dateStart = showSelectStartDialog();
 
+		// get end date
 		dateEnd = showSelectEndDialog(dateStart);
 
+		// create reservation
 		newReservation(vehicle, dateStart, dateEnd);
 
 	}
@@ -193,7 +197,7 @@ public class Menu {
 			int id = Integer.parseInt(idStr);
 			// retry if ID is out of bounds
 			// -1 becuase index 0
-			if (id > CarPoolManagement.vehicleList.size() -1 || id < 0) {
+			if (id > CarPoolManagement.vehicleList.size() - 1 || id < 0) {
 				System.err.println("Vehicle ID not found\n");
 				Utils.flush();
 				showSelectVehicleDialog();
@@ -292,22 +296,26 @@ public class Menu {
 
 		// user entered a date
 		default:
-			dateEnd = validateDateFormat(dateInput);
+
+			try {
+				dateEnd = validateDateFormat(dateInput);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				System.err.println("Invalid date format");
+				Utils.flush();
+				return showSelectEndDialog(dateStart);
+			}
+
 			break;
 		}
+
 		return dateEnd;
 
 	}
 
-	public Date validateDateFormat(String dateInput) {
-		Date time = null;
+	public Date validateDateFormat(String dateInput) throws ParseException {
 
-		try {
-			time = Utils.convertDate(dateInput).getTime();
-		} catch (Exception e) {
-			Utils.flush();
-			System.err.println(e.getMessage());
-		}
+		Date time = Utils.convertDate(dateInput).getTime();
 
 		return time;
 	}
