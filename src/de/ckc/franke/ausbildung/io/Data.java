@@ -127,6 +127,9 @@ public class Data {
 
 			populateVehicleListFromJSON(JSONArr);
 
+			System.out.println("Successfully imported " + JSONArr.size() + " entries.");
+			Utils.flush();
+
 		} catch (FileNotFoundException e) {
 
 			System.err.println("File not found");
@@ -137,8 +140,6 @@ public class Data {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// CarPoolManagement.vehicleList = vehicleList;
 	}
 
 	private static void populateVehicleListFromJSON(JSONArray JSONArr) {
