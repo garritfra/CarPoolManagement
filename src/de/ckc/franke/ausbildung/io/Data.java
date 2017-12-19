@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
+import de.ckc.franke.ausbildung.util.Utils;
 import enums.ErrorCode;
 
 public class Data {
@@ -129,6 +130,7 @@ public class Data {
 		} catch (FileNotFoundException e) {
 
 			System.err.println("File not found");
+			Utils.flush();
 			importJSON();
 
 		} catch (IOException | ParseException e) {

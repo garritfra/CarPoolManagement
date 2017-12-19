@@ -27,7 +27,7 @@ public class Io {
 	
 	
 
-	public int getMilageInput() throws Exception {
+	public int getMilageInput() {
 
 		String mileageStr;
 
@@ -38,7 +38,12 @@ public class Io {
 			int mileage = Integer.parseInt(mileageStr);
 			return mileage;
 		} else {
-			throw new Exception("The number you entered is not numeric");
+			System.err.println("Please enter a valid number");
+			Utils.flush();
+			getMilageInput();
+			
+			//Return 0 if error
+			return 0;
 
 		}
 	}
@@ -53,6 +58,8 @@ public class Io {
 			// retry if ID is not a number
 			if (!Utils.isDigit(id)) {
 				System.err.println("ID is not valid\n");
+				Utils.flush();
+				findVehicleForReservation(vehicleList);
 			} else {
 				// retry if ID is out of bounds
 					vehicle = vehicleList.get(Integer.parseInt(id));
@@ -62,9 +69,11 @@ public class Io {
 			
 		} catch (NumberFormatException e) {
 			System.err.println("Enter a correct ID");
+			Utils.flush();
 			listReservationsForVehicle(vehicle);
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("ID not found");
+			Utils.flush();
 			listReservationsForVehicle(vehicle);
 			
 			
@@ -78,8 +87,8 @@ public class Io {
 
 		LinkedList<Reservation> reservationList = vehicle.getReservationList();
 		if (vehicle.getReservationList().isEmpty()) {
-			Utils.flush();
 			System.err.println("No reservations found");
+			Utils.flush();
 			return;
 		}
 
@@ -114,6 +123,7 @@ public class Io {
 			return number;
 		} else {
 			System.err.println("Invalid Input");
+			Utils.flush();
 			return 0;
 		}
 	}

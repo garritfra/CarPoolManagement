@@ -191,8 +191,10 @@ public class Menu {
 		} else {
 			int id = Integer.parseInt(idStr);
 			// retry if ID is out of bounds
-			if (id > CarPoolManagement.vehicleList.size() || id < 0) {
+			// -1 becuase index 0
+			if (id > CarPoolManagement.vehicleList.size() -1 || id < 0) {
 				System.err.println("Vehicle ID not found\n");
+				Utils.flush();
 				showSelectVehicleDialog();
 			}
 
@@ -213,6 +215,7 @@ public class Menu {
 				showSelectVehicleDialog();
 			} else {
 				// Invalid Option
+				Utils.flush();
 				System.err.println("Invalid input");
 				showSelectVehicleDialog();
 			}
@@ -242,7 +245,6 @@ public class Menu {
 				return dateStart;
 
 			} catch (ParseException e) {
-				Utils.flush();
 				System.err.println("date has an invalid format");
 				Utils.flush();
 				showSelectStartDialog();
