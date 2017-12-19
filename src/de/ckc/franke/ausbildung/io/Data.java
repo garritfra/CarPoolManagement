@@ -2,6 +2,7 @@ package de.ckc.franke.ausbildung.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -124,6 +125,11 @@ public class Data {
 			JSONArr = (JSONArray) obj;
 
 			populateVehicleListFromJSON(JSONArr);
+
+		} catch (FileNotFoundException e) {
+
+			System.err.println("File not found");
+			importJSON();
 
 		} catch (IOException | ParseException e) {
 			// TODO Auto-generated catch block
