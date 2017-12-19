@@ -42,7 +42,6 @@ public class Data {
 
 		switch (userInput) {
 		case 1:
-			// TODO Import File
 			Data.importJSON();
 			break;
 
@@ -137,7 +136,6 @@ public class Data {
 			importJSON();
 
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

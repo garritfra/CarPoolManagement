@@ -124,9 +124,9 @@ public class Menu {
 	 * list all vehicles
 	 * 
 	 * @param vehicle
-	 *            TODO
+	 *            
 	 * @param vehicleList
-	 *            TODO
+	 *            
 	 */
 	public void listVehicles(Vehicle vehicle, LinkedList<Vehicle> vehicleList) {
 
