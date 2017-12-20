@@ -40,10 +40,7 @@ public class Io {
 		} else {
 			System.err.println("Please enter a valid number");
 			Utils.flush();
-			getMilageInput();
-			
-			//Return 0 if error
-			return 0;
+			return getMilageInput();
 
 		}
 	}
@@ -74,7 +71,7 @@ public class Io {
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("ID not found");
 			Utils.flush();
-			listReservationsForVehicle(vehicle);
+			findVehicleForReservation(vehicleList);
 			
 			
 		}
