@@ -84,6 +84,13 @@ public class Data {
 		String path;
 		String JSONString = arr.toJSONString(); // Convert JSON Array to string
 
+		
+		if(arr.isEmpty()) {
+			System.out.println("Nothing to export");
+			Utils.flush();
+			return 0;
+		}
+		
 		// Get custom path from user
 		System.out.println("export to path:");
 		path = scan.nextLine().trim();
