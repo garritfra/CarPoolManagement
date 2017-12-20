@@ -223,7 +223,9 @@ public class Utils {
 		System.out.flush();
 		System.err.flush();
 		try {
-			TimeUnit.SECONDS.sleep(1);
+
+			// Prevent text to show up at weird places
+			TimeUnit.MICROSECONDS.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
