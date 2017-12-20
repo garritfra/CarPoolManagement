@@ -81,8 +81,10 @@ public class Data {
 			arr.add(vehicleObj); // add vehicle to parent array
 		}
 
+		String folderName;
 		String path;
 		String JSONString = arr.toJSONString(); // Convert JSON Array to string
+		String defaultPath = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\";
 
 		if (arr.isEmpty()) {
 			System.out.println("Nothing to export");
@@ -91,9 +93,19 @@ public class Data {
 		}
 
 		// Get custom path from user
-		System.out.println("export to path:");
-		path = scan.nextLine().trim();
+		System.out.println("export to folder: (default: " + defaultPath + ")");
+		folderName = scan.nextLine().trim();
 
+		
+		if (folderName.contains("/")) {
+			//Use custom path
+			path = folderName;
+		} else {
+			
+			path = defaultPath;
+		}
+		
+		
 		// Create file Object
 		File file = new File(path, "vehicles.txt");
 
@@ -125,10 +137,10 @@ public class Data {
 		// Reset Vehicle List to prevent duplicate entries
 		CarPoolManagement.vehicleList.clear();
 
-		String pathPrefix = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\";
+		String defaultPathPrefix = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\";
 
 		// get path from user
-		System.out.println("Enter a file path. Default: " + pathPrefix);
+		System.out.println("Enter a file path. Default: " + defaultPathPrefix);
 		String fileName = scan.nextLine().trim();
 
 		String path;
@@ -136,7 +148,7 @@ public class Data {
 		if (fileName.contains("/")) {
 			path = fileName;
 		} else {
-			path = pathPrefix + fileName;
+			path = defaultPathPrefix + fileName;
 		}
 
 		// Concatenate file path
