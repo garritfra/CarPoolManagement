@@ -1,7 +1,6 @@
 package de.ckc.franke.ausbildung.io;
 
 import java.text.ParseException;
-import java.time.DateTimeException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Scanner;
