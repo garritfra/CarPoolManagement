@@ -32,10 +32,17 @@ public class Io {
 		String mileageStr;
 
 		System.out.println("Mileage:");
-
 		mileageStr = scan.nextLine();
+		
+		
 		if (Utils.isDigit(mileageStr)) {
 			int mileage = Integer.parseInt(mileageStr);
+			
+			if(mileage < 0) {
+				System.err.println("Mileage can not be below 0");
+				Utils.flush();
+				return getMilageInput();
+			}
 			return mileage;
 		} else {
 			System.err.println("Please enter a valid number");
