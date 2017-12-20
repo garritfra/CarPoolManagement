@@ -110,6 +110,10 @@ public class Menu {
 		case 5:
 			// Open Import/Export Menu
 			data.menu();
+			
+			//Reopen menu when done
+			showMenu();
+			
 			break;
 
 		case 0:

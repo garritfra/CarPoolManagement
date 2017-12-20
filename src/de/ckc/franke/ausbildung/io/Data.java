@@ -62,9 +62,10 @@ public class Data {
 	 * exports the vehicleList to JSON
 	 * 
 	 * @param vehicleList
+	 * @return 
 	 */
 	@SuppressWarnings("unchecked")
-	public static void exportJSON(LinkedList<Vehicle> vehicleList) {
+	public static Object exportJSON(LinkedList<Vehicle> vehicleList) {
 
 		JSONArray arr = new JSONArray();
 
@@ -95,7 +96,9 @@ public class Data {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println("Path not found");
+				Utils.flush();
+				return exportJSON(vehicleList);
 			}
 		}
 		try {
@@ -103,9 +106,12 @@ public class Data {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
 			bw.write(JSONString);
 			bw.close();
+			System.out.println("File successfully exported");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return file;
 
 	}
 
