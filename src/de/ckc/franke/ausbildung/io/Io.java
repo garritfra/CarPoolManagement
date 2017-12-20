@@ -119,7 +119,7 @@ public class Io {
 			int number = Integer.parseInt(choice.trim());
 			return number;
 		} else {
-			System.err.println("Invalid Input");
+			System.err.println("Input is not numeric");
 			Utils.flush();
 			return 0;
 		}

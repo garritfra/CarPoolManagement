@@ -50,9 +50,8 @@ public class Menu {
 		System.out.println("3. create new reservation");
 		System.out.println("4. list all reservations");
 		System.out.println("5. Import or Export Vehicle Data");
+		selectOption();
 
-		selectOption(io.getChoice());
-		showMenu();
 	}
 
 	// public void getChoice() {
@@ -69,12 +68,12 @@ public class Menu {
 
 	/**
 	 * checks selection of menu
-	 * 
-	 * @param userInput
 	 */
-	public void selectOption(int userInput) {
-
-		switch (userInput) {
+	public void selectOption() {
+		
+		int choice = io.getChoice();
+		
+		switch (choice) {
 		case 1:
 			// create new vehicle
 			// carPoolManagement.newVehicle();
@@ -112,9 +111,16 @@ public class Menu {
 			// Open Import/Export Menu
 			data.menu();
 			break;
+	
+		case 0:
+			//getChoice returns 0 if the number is 
+			showMenu();
+			break;
 
 		default:
 			//Error is handled at getChoice()
+			System.err.println("Invalid input");
+			Utils.flush();
 			this.showMenu();
 		}
 	}
