@@ -95,11 +95,13 @@ public class Utils {
 		return cal.getTime();
 	}
 
-	public static void validateReservation(Reservation reservation, Vehicle vehicle, Date dateStart, Date dateEnd,
+	public static boolean validateReservation(Reservation reservation, Vehicle vehicle, Date dateStart, Date dateEnd,
 			LinkedList<Reservation> reservationList) throws DateTimeException {
 		// Check if vehicle is already booked
 		if (isDuplicate(reservation, reservationList)) {
-			throw new DateTimeException("The vehicle is already booked for this date");
+			System.err.println("The vehicle is already booked for this date");
+			Utils.flush();
+			return false;
 		}
 
 		// Check if date is not in the future
@@ -110,25 +112,33 @@ public class Utils {
 			// upon validation
 			cal.add(Calendar.MINUTE, -10);
 			if (!cal.getTime().before(dateStart)) {
-				throw new DateTimeException("The date you entered is in the past");
+				System.err.println("The date you entered is in the past");
+				Utils.flush();
+				return false;
 			}
 
 		}
 
 		// Check if begin is after end date
 		if (EndBeforeBegin(dateStart, dateEnd)) {
-			throw new DateTimeException("The end date can not be before the begin date");
+			System.err.println("The end date can not be before the begin date");
+			Utils.flush();
+			return false;
 		}
 
 		// Check if date exists
 		if (!dateExists(dateStart) || !dateExists(dateEnd)) {
-			throw new DateTimeException("You have entered a invalid date");
+			System.err.println("You have entered a invalid date");
+			Utils.flush();
+			return false;
 		}
+		
+		//Reservation is valid
+		return true;
 	}
 
 	/**
-	 * Returns true, if the reservation overlaps with any other reservation TODO
-	 * Java Doc
+	 * Returns true, if the reservation overlaps with any other reservation
 	 * 
 	 * return true, if beginning of entered reservation is after beginning of
 	 * reservation-iterate and beginning of entered reservation is before end of
@@ -155,21 +165,7 @@ public class Utils {
 			// iteration of reservations for comparison
 			Date nBegin = activeReservation.getBeginnDate();
 			Date nEnd = activeReservation.getEndDate();
-
-			// return true, if
-			// beginning of entered reservation is after beginning of reservation-iterate
-			// and
-			// beginning of entered reservation is before end of reservation-iterate
-
-			// or
-			// end of entered reservation is after beginning of reservation-iterate
-			// and
-			// end of entered reservation is before end of reservation-iterate
-
-			// or
-			// begin of entered reservation is before beginning of reservation-iterate
-			// and
-			// end of entered reservation is after end of reservation iterate
+			
 			if (cBegin.after(nBegin) && cBegin.before(nEnd) || cEnd.after(nBegin) && cEnd.before(nEnd)
 					|| cBegin.before(nBegin) && cEnd.after(nEnd)) {
 				return true;// reservation overlaps with another reservation
