@@ -25,11 +25,15 @@ public class Main {
 		String absolutePath = path + fileName;
 
 		DB.createNewDatabase(fileName);
+		DB.createNewTable("vehicles");
 		DB.connect();
+		DB.selectAll();
 
 		// start program
 
 		carPoolManagement.start(vehicleList);
 	}
+	
+	
 
 }

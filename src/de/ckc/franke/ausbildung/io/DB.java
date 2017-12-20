@@ -29,7 +29,7 @@ public class DB {
 
 		// SQL statement for creating a new table
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n" + "	id integer PRIMARY KEY,\n"
-				+ "	name text NOT NULL,\n" + "	capacity real\n" + ");";
+				+ "	make text NOT NULL,\n" + "	model text NOT NULL,\n" + "	mileage integer\n" + ");";
 
 		try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
 			// create a new table
@@ -63,10 +63,10 @@ public class DB {
 		return conn;
 	}
 
-	public void selectAll() {
-		String sql = "SELECT id, name, capacity FROM warehouses";
+	public static void selectAll() {
+		String sql = "SELECT id, make, model FROM vehicles";
 
-		try (Connection conn = this.connect();
+		try (Connection conn = connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -74,6 +74,7 @@ public class DB {
 			while (rs.next()) {
 				System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getDouble("capacity"));
 			}
+			conn.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
