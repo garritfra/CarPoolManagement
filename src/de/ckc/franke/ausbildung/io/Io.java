@@ -27,18 +27,27 @@ public class Io {
 	
 	
 
-	public int getMilageInput() throws Exception {
+	public int getMilageInput() {
 
 		String mileageStr;
 
 		System.out.println("Mileage:");
-
 		mileageStr = scan.nextLine();
+		
+		
 		if (Utils.isDigit(mileageStr)) {
 			int mileage = Integer.parseInt(mileageStr);
+			
+			if(mileage < 0) {
+				System.err.println("Mileage can not be below 0");
+				Utils.flush();
+				return getMilageInput();
+			}
 			return mileage;
 		} else {
-			throw new Exception("The number you entered is not numeric");
+			System.err.println("Please enter a valid number");
+			Utils.flush();
+			return getMilageInput();
 
 		}
 	}
@@ -53,6 +62,8 @@ public class Io {
 			// retry if ID is not a number
 			if (!Utils.isDigit(id)) {
 				System.err.println("ID is not valid\n");
+				Utils.flush();
+				findVehicleForReservation(vehicleList);
 			} else {
 				// retry if ID is out of bounds
 					vehicle = vehicleList.get(Integer.parseInt(id));
@@ -62,10 +73,12 @@ public class Io {
 			
 		} catch (NumberFormatException e) {
 			System.err.println("Enter a correct ID");
+			Utils.flush();
 			listReservationsForVehicle(vehicle);
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("ID not found");
-			listReservationsForVehicle(vehicle);
+			Utils.flush();
+			findVehicleForReservation(vehicleList);
 			
 			
 		}
@@ -76,10 +89,10 @@ public class Io {
 	 */
 	public void listReservationsForVehicle(Vehicle vehicle) {
 
-
+		LinkedList<Reservation> reservationList = vehicle.getReservationList();
 		if (vehicle.getReservationList().isEmpty()) {
-			Utils.flush();
 			System.err.println("No reservations found");
+			Utils.flush();
 			return;
 		}
 
@@ -89,7 +102,7 @@ public class Io {
 		System.out.format("├────────────────────────────────┼────────────────────────────────┤%n");
 		String leftAlignFormat = "│ %-30s │ %-30s │%n";
 
-		for (Reservation reservation : vehicle.getReservationList()) {
+		for (Reservation reservation : reservationList) {
 			String beginnDate = reservation.getBeginnDate().toString();
 			String endDate = reservation.getEndDate().toString();
 
@@ -113,7 +126,8 @@ public class Io {
 			int number = Integer.parseInt(choice.trim());
 			return number;
 		} else {
-			System.err.println("Invalid Input");
+			System.err.println("Input is not numeric");
+			Utils.flush();
 			return 0;
 		}
 	}

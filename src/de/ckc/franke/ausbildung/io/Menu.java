@@ -1,10 +1,14 @@
 package de.ckc.franke.ausbildung.io;
 
+import java.text.ParseException;
+import java.time.DateTimeException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.Controller;
+import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import de.ckc.franke.ausbildung.util.Constants;
 import de.ckc.franke.ausbildung.util.Utils;
@@ -36,7 +40,7 @@ public class Menu {
 	/**
 	 * show menu and get user input
 	 */
-	public void show() {
+	public void showMenu() {
 		// Cons.clear();
 
 		System.out.println("\nCar Pool Management System");
@@ -46,9 +50,8 @@ public class Menu {
 		System.out.println("3. create new reservation");
 		System.out.println("4. list all reservations");
 		System.out.println("5. Import or Export Vehicle Data");
+		selectOption();
 
-		selectOption(io.getChoice());
-		show();
 	}
 
 	// public void getChoice() {
@@ -65,12 +68,12 @@ public class Menu {
 
 	/**
 	 * checks selection of menu
-	 * 
-	 * @param userInput
 	 */
-	public void selectOption(int userInput) {
+	public void selectOption() {
 
-		switch (userInput) {
+		int choice = io.getChoice();
+
+		switch (choice) {
 		case 1:
 			// create new vehicle
 			// carPoolManagement.newVehicle();
@@ -84,7 +87,7 @@ public class Menu {
 			scan.nextLine();
 
 			// go back to menu
-			show();
+			showMenu();
 			break;
 
 		case 3:
@@ -101,19 +104,28 @@ public class Menu {
 			vehicle = io.findVehicleForReservation(CarPoolManagement.vehicleList);
 
 			io.listReservationsForVehicle(vehicle);
-			show(); // Show Menu
+			showMenu(); // Show Menu
 			break;
 
 		case 5:
 			// Open Import/Export Menu
-			data.menu(io);
+			data.menu();
+			
+			//Reopen menu when done
+			showMenu();
+			
+			break;
+
+		case 0:
+			// getChoice returns 0 if the number is
+			showMenu();
 			break;
 
 		default:
-
-			// Handle invalid inputs
-			System.err.println("Input not valid");
-			this.show();
+			// Error is handled at getChoice()
+			System.err.println("Invalid input");
+			Utils.flush();
+			this.showMenu();
 		}
 	}
 
@@ -121,16 +133,16 @@ public class Menu {
 	 * list all vehicles
 	 * 
 	 * @param vehicle
-	 *            TODO
+	 * 
 	 * @param vehicleList
-	 *            TODO
+	 * 
 	 */
 	public void listVehicles(Vehicle vehicle, LinkedList<Vehicle> vehicleList) {
 
 		// if no vehicles were found, return to menu
 		if (vehicleList.isEmpty()) {
 			System.err.println("No vehicles defined");
-			show();
+			showMenu();
 		} else {
 			System.out.format(
 					"┌────────────────────────────┬────────────────────────────┬────────────────────────────┬───────────────┐%n");
@@ -161,55 +173,191 @@ public class Menu {
 	 * 
 	 */
 	public void newReservationDialog() {
-		// Console.clear();
+		Date dateStart;
+		Date dateEnd;
 
-		Vehicle vehicle;
+		// get vehicle for reservation
+		vehicle = showSelectVehicleDialog();
+
+		// get starting date
+		dateStart = showSelectStartDialog();
+
+		// get end date
+		dateEnd = showSelectEndDialog(dateStart);
+
+		// create reservation
+		newReservation(vehicle, dateStart, dateEnd);
+
+	}
+
+	private Vehicle showSelectVehicleDialog() {
+		Vehicle vehicle = null;
 
 		System.out.println("create new reservation for vehicle: ");
-		String id = scan.nextLine().trim();
-
+		String idStr = scan.nextLine().trim();
 		// retry if ID is not a number
-		if (!Utils.isDigit(id)) {
+		if (!Utils.isDigit(idStr)) {
 			Utils.flush();
-			System.err.println("ID is not valid\n");
+			System.err.println("Enter a valid ID\n");
+			Utils.flush();
 			newReservationDialog();
 		} else {
+			int id = Integer.parseInt(idStr);
 			// retry if ID is out of bounds
-			try {
-				vehicle = CarPoolManagement.vehicleList.get(Integer.parseInt(id));
-				boolean valid;
-
-				do { // while input not valid
-
-					// Output selected vehicle and validation
-					System.out.println(vehicle.getMake() + " " + vehicle.getModel());
-					System.out.println("Is this correct? (Y/N)");
-
-					// Check user validation
-					String choice = scan.nextLine();
-					if (choice.trim().equals("Y") || choice.trim().equals("y")) {
-						// Yes
-						carPoolManagement.newReservation(vehicle);
-
-						valid = true;
-					} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
-						// No
-						valid = true;
-						newReservationDialog();
-					} else {
-						// Invalid Option
-
-						valid = false;
-					}
-				} while (!valid);
-
-			} catch (IndexOutOfBoundsException e) {
-				Utils.flush();
+			// -1 becuase index 0
+			if (id > CarPoolManagement.vehicleList.size() - 1 || id < 0) {
 				System.err.println("Vehicle ID not found\n");
-				newReservationDialog();
+				Utils.flush();
+				showSelectVehicleDialog();
+			}
 
+			vehicle = CarPoolManagement.vehicleList.get(id);
+
+			// Output selected vehicle and validation
+			System.out.println(vehicle.getMake() + " " + vehicle.getModel());
+
+			// Ask user if the vehicle is correct
+			System.out.println("Is this correct? (Y/N)");
+			String choice = scan.nextLine();
+			if (choice.trim().equals("Y") || choice.trim().equals("y")) {
+				// Yes
+				// return the vehicle
+				return vehicle;
+			} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
+				// No
+				showSelectVehicleDialog();
+			} else {
+				// Invalid Option
+				Utils.flush();
+				System.err.println("Invalid input");
+				showSelectVehicleDialog();
+			}
+
+		}
+
+		return vehicle;
+	}
+
+	private Date showSelectStartDialog() {
+		System.out.println("Enter a starting date in format dd.MM.yyyy (HH:mm) (enter 'c' for current date)");
+		String dateInput = scan.nextLine().trim();
+		Date dateStart;
+
+		if (dateInput.toString().toLowerCase().startsWith("c")) {
+			// use current time as beginning
+			dateStart = Utils.getCurrentTime();
+			return dateStart;
+		} else {
+			try {
+				// Format time from string to date
+				dateStart = Utils.convertDate(dateInput).getTime();
+				
+				//if date is in the past
+				if(!Utils.isInFuture(dateStart)) {
+					System.err.println("Date must be in the future");
+					Utils.flush();
+					return showSelectStartDialog();
+				}
+
+				Utils.flush();
+				return dateStart;
+
+			} catch (ParseException e) {
+				System.err.println("date has an invalid format");
+				Utils.flush();
+				return showSelectStartDialog();
 			}
 		}
+
+	}
+
+	private Date showSelectEndDialog(Date dateStart) {
+		Date dateEnd = null;
+		// Output options
+		System.out.println("Select a duration or enter an end date in format dd.MM.yyyy (HH:mm)");
+		System.out.println("1. One Day");
+		System.out.println("2. One Week");
+		System.out.println("3. One Month");
+		System.out.println("4. One Year");
+
+		// get user input
+		String dateInput = scan.nextLine().trim();
+
+		switch (dateInput) {
+
+		// reservation for one day
+		case "1":
+			dateEnd = Utils.addDays(dateStart, 1);
+			break;
+
+		// reservation for one week
+		case "2":
+			dateEnd = Utils.addDays(dateStart, 7);
+			break;
+		// reservation for one month
+		case "3":
+			dateEnd = Utils.addDays(dateStart, 30);
+			break;
+
+		// reservation for one year
+		case "4":
+			dateEnd = Utils.addDays(dateStart, 365);
+			break;
+
+		// user entered a date
+		default:
+			
+			try {
+				dateEnd = validateDateFormat(dateInput);
+				if(!Utils.isInFuture(dateEnd)) {
+					System.err.println("Date can not be in the past");
+					Utils.flush();
+					return showSelectEndDialog(dateStart);
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				
+				
+				System.err.println("Invalid date format");
+				Utils.flush();
+				return showSelectEndDialog(dateStart);
+			}
+
+			break;
+		}
+
+		return dateEnd;
+
+	}
+
+	public Date validateDateFormat(String dateInput) throws ParseException {
+
+		Date time = Utils.convertDate(dateInput).getTime();
+
+		return time;
+	}
+
+	public void newReservation(Vehicle vehicle, Date dateStart, Date dateEnd) {
+
+		Reservation reservation = new Reservation(dateStart, dateEnd, vehicle);
+
+		LinkedList<Reservation> reservationList = vehicle.getReservationList();
+
+			//If reservation is not valid
+			if(!Utils.validateReservation(reservation, vehicle, dateStart, dateEnd, reservationList)) {
+				showSelectEndDialog(dateStart);
+			}
+			
+			
+
+		
+
+		reservationList.add(reservation);
+
+		vehicle.setReservationList(reservationList);
+
+		System.out.println("Reservation has been saved");
+		showMenu();
 
 	}
 

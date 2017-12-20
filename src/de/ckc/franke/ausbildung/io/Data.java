@@ -2,6 +2,7 @@ package de.ckc.franke.ausbildung.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,20 +16,23 @@ import org.json.simple.parser.ParseException;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
+import de.ckc.franke.ausbildung.util.Utils;
 import enums.ErrorCode;
 
 public class Data {
 
 	static Scanner scan = new Scanner(System.in);
-	Io io;
+	Io io = new Io();
 
-	public void menu(Io io) {
+	public void menu() {
 		System.out.println("\nImport/Export Data");
 		System.out.println("--------------------");
 		System.out.println("1. Import from txt file");
 		System.out.println("2. Export as txt file");
 
-		selectOption(io.getChoice());
+		int choice = io.getChoice();
+
+		selectOption(choice);
 	}
 
 	/**
@@ -40,7 +44,6 @@ public class Data {
 
 		switch (userInput) {
 		case 1:
-			// TODO Import File
 			Data.importJSON();
 			break;
 
@@ -49,9 +52,9 @@ public class Data {
 			break;
 		default:
 			// Handle invalid inputs
-			ErrorCode err = ErrorCode.INVALID_INPUT;
-			System.err.println(err);
-			menu(io);
+			// ErrorCode err = ErrorCode.INVALID_INPUT;
+			// System.err.println(err);
+			menu();
 		}
 	}
 
@@ -59,9 +62,10 @@ public class Data {
 	 * exports the vehicleList to JSON
 	 * 
 	 * @param vehicleList
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static void exportJSON(LinkedList<Vehicle> vehicleList) {
+	public static Object exportJSON(LinkedList<Vehicle> vehicleList) {
 
 		JSONArray arr = new JSONArray();
 
@@ -77,13 +81,31 @@ public class Data {
 			arr.add(vehicleObj); // add vehicle to parent array
 		}
 
+		String folderName;
 		String path;
 		String JSONString = arr.toJSONString(); // Convert JSON Array to string
+		String defaultPath = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\";
+
+		if (arr.isEmpty()) {
+			System.out.println("Nothing to export");
+			Utils.flush();
+			return 0;
+		}
 
 		// Get custom path from user
-		System.out.println("export to path:");
-		path = scan.nextLine().trim();
+		System.out.println("export to folder: (default: " + defaultPath + ")");
+		folderName = scan.nextLine().trim();
 
+		
+		if (folderName.contains("/")) {
+			//Use custom path
+			path = folderName;
+		} else {
+			
+			path = defaultPath;
+		}
+		
+		
 		// Create file Object
 		File file = new File(path, "vehicles.txt");
 
@@ -92,7 +114,9 @@ public class Data {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println("Path not found");
+				Utils.flush();
+				return exportJSON(vehicleList);
 			}
 		}
 		try {
@@ -100,20 +124,35 @@ public class Data {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
 			bw.write(JSONString);
 			bw.close();
+			System.out.println("File successfully exported");
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return file;
 
 	}
 
 	public static void importJSON() {
-		//Reset Vehicle List to prevent duplicate entries
+		// Reset Vehicle List to prevent duplicate entries
 		CarPoolManagement.vehicleList.clear();
-		
-		// JSONObject vehiclesJSON;
-		// System.out.println("Enter a path:");
-		// path = scan.nextLine().trim();
-		String path = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
+
+		String defaultPathPrefix = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\";
+
+		// get path from user
+		System.out.println("Enter a file path. Default: " + defaultPathPrefix);
+		String fileName = scan.nextLine().trim();
+
+		String path;
+
+		if (fileName.contains("/")) {
+			path = fileName;
+		} else {
+			path = defaultPathPrefix + fileName;
+		}
+
+		// Concatenate file path
+
 		JSONParser parser = new JSONParser();
 
 		Object obj;
@@ -125,12 +164,18 @@ public class Data {
 
 			populateVehicleListFromJSON(JSONArr);
 
+			System.out.println("Successfully imported " + JSONArr.size() + " entries.");
+			Utils.flush();
+
+		} catch (FileNotFoundException e) {
+
+			System.err.println("File not found");
+			Utils.flush();
+			importJSON();
+
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		//CarPoolManagement.vehicleList = vehicleList;
 	}
 
 	private static void populateVehicleListFromJSON(JSONArray JSONArr) {
@@ -158,7 +203,7 @@ public class Data {
 
 			vehicle = new Vehicle(model, make, mileage);
 			CarPoolManagement.vehicleList.addLast(vehicle);
-			
+
 		}
 
 	}

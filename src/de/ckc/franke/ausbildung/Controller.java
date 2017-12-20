@@ -47,7 +47,7 @@ public class Controller {
 			if (choice.trim().equals("Y") || choice.trim().equals("y")) {
 				carPoolManagement.newVehicle();
 			} else if (choice.trim().equals("N") || choice.trim().equals("n")) {
-				menu.show();
+				menu.showMenu();
 				valid = true;
 			} else {
 				System.err.println("Invalid");
