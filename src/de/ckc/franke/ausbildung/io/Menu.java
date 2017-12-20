@@ -70,9 +70,9 @@ public class Menu {
 	 * checks selection of menu
 	 */
 	public void selectOption() {
-		
+
 		int choice = io.getChoice();
-		
+
 		switch (choice) {
 		case 1:
 			// create new vehicle
@@ -111,14 +111,14 @@ public class Menu {
 			// Open Import/Export Menu
 			data.menu();
 			break;
-	
+
 		case 0:
-			//getChoice returns 0 if the number is 
+			// getChoice returns 0 if the number is
 			showMenu();
 			break;
 
 		default:
-			//Error is handled at getChoice()
+			// Error is handled at getChoice()
 			System.err.println("Invalid input");
 			Utils.flush();
 			this.showMenu();
@@ -242,12 +242,19 @@ public class Menu {
 		if (dateInput.toString().toLowerCase().startsWith("c")) {
 			// use current time as beginning
 			dateStart = Utils.getCurrentTime();
-
 			return dateStart;
 		} else {
 			try {
 				// Format time from string to date
 				dateStart = Utils.convertDate(dateInput).getTime();
+				
+				//if date is in the past
+				if(!Utils.isInFuture(dateStart)) {
+					System.err.println("Date must be in the future");
+					Utils.flush();
+					return showSelectStartDialog();
+				}
+
 				Utils.flush();
 				return dateStart;
 
@@ -295,11 +302,18 @@ public class Menu {
 
 		// user entered a date
 		default:
-
+			
 			try {
 				dateEnd = validateDateFormat(dateInput);
+				if(!Utils.isInFuture(dateEnd)) {
+					System.err.println("Date can not be in the past");
+					Utils.flush();
+					return showSelectEndDialog(dateStart);
+				}
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
+				
+				
 				System.err.println("Invalid date format");
 				Utils.flush();
 				return showSelectEndDialog(dateStart);
@@ -325,12 +339,14 @@ public class Menu {
 
 		LinkedList<Reservation> reservationList = vehicle.getReservationList();
 
-		try {
-			Utils.validateReservation(reservation, vehicle, dateStart, dateEnd, reservationList);
-		} catch (DateTimeException e) {
-			System.err.println(e.getMessage());
-			newReservationDialog();
-		}
+			//If reservation is not valid
+			if(!Utils.validateReservation(reservation, vehicle, dateStart, dateEnd, reservationList)) {
+				showSelectEndDialog(dateStart);
+			}
+			
+			
+
+		
 
 		reservationList.add(reservation);
 
