@@ -22,15 +22,17 @@ import enums.ErrorCode;
 public class Data {
 
 	static Scanner scan = new Scanner(System.in);
-	Io io;
+	Io io = new Io();
 
-	public void menu(Io io) {
+	public void menu() {
 		System.out.println("\nImport/Export Data");
 		System.out.println("--------------------");
 		System.out.println("1. Import from txt file");
 		System.out.println("2. Export as txt file");
 
-		selectOption(io.getChoice());
+		int choice = io.getChoice();
+
+		selectOption(choice);
 	}
 
 	/**
@@ -50,9 +52,9 @@ public class Data {
 			break;
 		default:
 			// Handle invalid inputs
-			ErrorCode err = ErrorCode.INVALID_INPUT;
-			System.err.println(err);
-			menu(io);
+			//ErrorCode err = ErrorCode.INVALID_INPUT;
+			//System.err.println(err);
+			menu();
 		}
 	}
 
@@ -159,7 +161,6 @@ public class Data {
 			make = vehicleObj.get("make").toString();
 			model = vehicleObj.get("model").toString();
 			mileageStr = vehicleObj.get("mileage").toString();
-			
 
 			// Convert mileage to Integer
 			mileage = Integer.parseInt(mileageStr);

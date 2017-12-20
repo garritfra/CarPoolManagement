@@ -110,13 +110,11 @@ public class Menu {
 
 		case 5:
 			// Open Import/Export Menu
-			data.menu(io);
+			data.menu();
 			break;
 
 		default:
-
-			// Handle invalid inputs
-			System.err.println("Input not valid");
+			//Error is handled at getChoice()
 			this.showMenu();
 		}
 	}
