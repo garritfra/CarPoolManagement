@@ -52,8 +52,8 @@ public class Data {
 			break;
 		default:
 			// Handle invalid inputs
-			//ErrorCode err = ErrorCode.INVALID_INPUT;
-			//System.err.println(err);
+			// ErrorCode err = ErrorCode.INVALID_INPUT;
+			// System.err.println(err);
 			menu();
 		}
 	}
@@ -62,7 +62,7 @@ public class Data {
 	 * exports the vehicleList to JSON
 	 * 
 	 * @param vehicleList
-	 * @return 
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public static Object exportJSON(LinkedList<Vehicle> vehicleList) {
@@ -84,13 +84,12 @@ public class Data {
 		String path;
 		String JSONString = arr.toJSONString(); // Convert JSON Array to string
 
-		
-		if(arr.isEmpty()) {
+		if (arr.isEmpty()) {
 			System.out.println("Nothing to export");
 			Utils.flush();
 			return 0;
 		}
-		
+
 		// Get custom path from user
 		System.out.println("export to path:");
 		path = scan.nextLine().trim();
@@ -114,7 +113,7 @@ public class Data {
 			bw.write(JSONString);
 			bw.close();
 			System.out.println("File successfully exported");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -126,10 +125,22 @@ public class Data {
 		// Reset Vehicle List to prevent duplicate entries
 		CarPoolManagement.vehicleList.clear();
 
-		System.out.println("Enter a path:");
-		String path = scan.nextLine().trim();
-		// String path =
-		// "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\vehicles.txt";
+		String pathPrefix = "E:\\Daten_Garrit_Franke\\Eclipse_Workspace\\Fuhrparkverwaltung\\";
+
+		// get path from user
+		System.out.println("Enter a file path. Default: " + pathPrefix);
+		String fileName = scan.nextLine().trim();
+
+		String path;
+
+		if (fileName.contains("/")) {
+			path = fileName;
+		} else {
+			path = pathPrefix + fileName;
+		}
+
+		// Concatenate file path
+
 		JSONParser parser = new JSONParser();
 
 		Object obj;
