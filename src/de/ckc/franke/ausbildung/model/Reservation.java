@@ -5,11 +5,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Reservation constructor
+ * 
+ * @author frankeg
+ *
+ */
 public class Reservation {
 
 	private Date beginnDate;
 	private Date endDate;
 	private Vehicle vehicle;
+
 	public Reservation(Date dateStart, Date dateEnd, Vehicle vehicle) {
 		this.setBeginDate(dateStart);
 		this.setEndDate(dateEnd);
@@ -41,6 +48,12 @@ public class Reservation {
 		this.vehicle = vehicle;
 	}
 
+	/**
+	 * checks, if a given date is valid
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static boolean isValid(Date date) {
 
 		try {
@@ -52,12 +65,5 @@ public class Reservation {
 			return false;
 		}
 	}
-	
-	
-
-
-
-
-	
 
 }
