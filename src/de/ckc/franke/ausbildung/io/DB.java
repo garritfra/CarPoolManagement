@@ -62,7 +62,7 @@ public class DB {
 			// create a connection to the database
 			conn = DriverManager.getConnection(url);
 
-			System.out.println("Connection to SQLite has been established.");
+//			System.out.println("Connection to SQLite has been established.");
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -125,6 +125,18 @@ public class DB {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public static void updateAll() {
+		for (Vehicle vehicle: CarPoolManagement.vehicleList) {
+			String make = vehicle.getMake();
+			String model = vehicle.getModel();
+			int mileage = vehicle.getMileage();
+			
+			DB.insert(make, model, mileage);
+			DB.selectAll();
+			
 		}
 	}
 

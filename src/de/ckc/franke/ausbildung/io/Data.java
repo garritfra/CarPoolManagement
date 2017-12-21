@@ -27,7 +27,8 @@ public class Data {
 		System.out.println("\nImport/Export Data");
 		System.out.println("--------------------");
 		System.out.println("1. Import from txt file");
-		System.out.println("2. Export as txt file");
+		System.out.println("2. Export as txt file\n");
+		System.out.println("3. Update Database");
 
 		int choice = io.getChoice();
 
@@ -49,12 +50,25 @@ public class Data {
 		case 2:
 			Data.exportJSON(CarPoolManagement.vehicleList);
 			break;
+			
+		case 3:
+			Data.updateDB();
+			break;
 		default:
 			// Handle invalid inputs
 			// ErrorCode err = ErrorCode.INVALID_INPUT;
 			// System.err.println(err);
 			menu();
 		}
+		
+		
+	}
+
+	private static void updateDB() {
+		
+		DB.updateAll();
+		System.out.println("Success");
+		return;
 	}
 
 	/**
