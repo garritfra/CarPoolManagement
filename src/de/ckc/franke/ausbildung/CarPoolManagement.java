@@ -6,6 +6,7 @@ package de.ckc.franke.ausbildung;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import de.ckc.franke.ausbildung.io.DB;
 import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
@@ -44,9 +45,13 @@ public class CarPoolManagement {
 
 	/**
 	 * Program start
+	 * @param vehicleList 
 	 */
 	void start(LinkedList<Vehicle> vehicleList) {
 		CarPoolManagement.vehicleList = vehicleList;
+		
+		vehicleList = DB.selectAll();
+		
 		// Data.toJSON(vehicleList);
 
 		// Set Dateformat Constants to not lenient for date conversion

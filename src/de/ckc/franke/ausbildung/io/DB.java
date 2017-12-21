@@ -7,6 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+
+import de.ckc.franke.ausbildung.CarPoolManagement;
+import de.ckc.franke.ausbildung.model.Vehicle;
 
 public class DB {
 	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\Vehicles;";
@@ -75,22 +79,31 @@ public class DB {
 		return conn;
 	}
 
-	public static void selectAll() {
+	public static LinkedList<Vehicle> selectAll() {
 		String sql = "SELECT id, make, model, mileage FROM vehicles";
-
+		
+		
 		try (Connection conn = connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
 
 			// loop through the result set
 			while (rs.next()) {
-				System.out.println(rs.getInt("id") + "\t" + rs.getString("make") + "\t" + rs.getString("model") + "\t"
-						+ rs.getDouble("mileage"));
+				
+				Vehicle vehicle = new Vehicle(rs.getString("make"), rs.getString("model"), rs.getInt("mileage"));
+				
+				
+				CarPoolManagement.vehicleList.addLast(vehicle);
+				
+				
+//				System.out.println(rs.getInt("id") + "\t" + rs.getString("make") + "\t" + rs.getString("model") + "\t"
+//						+ rs.getDouble("mileage"));
 			}
 			conn.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		return null;
 	}
 
 	public static void insert(String make, String model, int mileage) {
