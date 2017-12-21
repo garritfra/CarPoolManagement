@@ -15,6 +15,12 @@ import de.ckc.franke.ausbildung.model.Vehicle;
 public class VehicleDAO extends DAO {
 	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\Vehicles;";
 
+	
+	/**
+	 * Creates new vehicles table with all corresponding fields
+	 * 
+	 * @author frankeg
+	 */
 	public static void createNewTable() {
 
 		String tableName = "Vehicles";
@@ -41,6 +47,11 @@ public class VehicleDAO extends DAO {
 
 	}
 
+	
+	/**
+	 * Select all vehicles and save then to the main vehicleList
+	 * @return vehicleList
+	 */
 	public static LinkedList<Vehicle> selectAll() {
 		String sql = "SELECT id, make, model, mileage FROM vehicles";
 		LinkedList<Vehicle> vehicleList = CarPoolManagement.vehicleList;
@@ -71,6 +82,13 @@ public class VehicleDAO extends DAO {
 		return vehicleList;
 	}
 
+	
+	/**
+	 * Insert new vehicle to database
+	 * @param make
+	 * @param model
+	 * @param mileage
+	 */
 	public static void insert(String make, String model, int mileage) {
 		String sql = "INSERT INTO vehicles(make,model,mileage) VALUES(?,?,?)";
 		Connection conn = connect(url);
@@ -89,7 +107,14 @@ public class VehicleDAO extends DAO {
 			}
 		}
 	}
-
+	
+	/**
+	 * add the currently loaded vehicleList to the database
+	 * WARNING: Vehicles added might be duplicates
+	 * 
+	 * Prints out "Success" when done
+	 * @author frankeg
+	 */
 	public static void updateAll() {
 		for (Vehicle vehicle : CarPoolManagement.vehicleList) {
 			String make = vehicle.getMake();
