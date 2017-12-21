@@ -1,5 +1,6 @@
 package de.ckc.franke.ausbildung;
 
+import java.sql.Connection;
 import java.util.LinkedList;
 
 import de.ckc.franke.ausbildung.io.Data;
@@ -22,11 +23,14 @@ public class Main {
 
 		String path = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\";
 		String fileName = "Vehicles";
-		String absolutePath = path + fileName;
-
+		//String absolutePath = path + fileName;
+//		Connection conn;
+		
+		
 		DB.createNewDatabase(fileName);
 		DB.createNewTable("vehicles");
 		DB.connect();
+//		conn = DB.connect();
 		DB.selectAll();
 
 		// start program
