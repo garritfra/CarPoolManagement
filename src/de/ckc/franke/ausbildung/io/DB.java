@@ -30,13 +30,23 @@ public class DB {
 		// SQL statement for creating a new table
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n" + "	id integer PRIMARY KEY,\n"
 				+ "	name text NOT NULL,\n" + "	capacity real\n" + ");";
+		Connection conn = null;
 
-		try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
+		try {
+			conn = DriverManager.getConnection(url);
+			Statement stmt = conn.createStatement();
 			// create a new table
 			stmt.execute(sql);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 	public static Connection connect() {
@@ -51,28 +61,29 @@ public class DB {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException ex) {
-				System.out.println(ex.getMessage());
-			}
+			// } finally {
+			// try {
+			// if (conn != null) {
+			//
+			// conn.close();
+			// }
+			// } catch (SQLException ex) {
+			// System.out.println(ex.getMessage());
+			// }
 		}
 		return conn;
 	}
 
-	public void selectAll() {
-		String sql = "SELECT id, name, capacity FROM warehouses";
+	public static void selectAll() {
+		String sql = "SELECT id, make, model, mileage FROM vehicles";
 
-		try (Connection conn = this.connect();
+		try (Connection conn = connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql)) {
 
 			// loop through the result set
 			while (rs.next()) {
-				System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getDouble("capacity"));
+				System.out.println(rs.getInt("id") + "\t" + rs.getString("make") + rs.getString("model") + "\t" + rs.getDouble("mileage"));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
