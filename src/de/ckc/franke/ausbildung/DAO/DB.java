@@ -1,4 +1,4 @@
-package de.ckc.franke.ausbildung.io;
+package de.ckc.franke.ausbildung.DAO;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

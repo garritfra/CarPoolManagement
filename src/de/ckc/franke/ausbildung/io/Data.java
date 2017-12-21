@@ -3,6 +3,7 @@ package de.ckc.franke.ausbildung.io;
 import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
+import de.ckc.franke.ausbildung.DAO.DB;
 import de.ckc.franke.ausbildung.io.wrapper.JSON;
 
 public class Data {
