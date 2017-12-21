@@ -5,10 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+/**
+ * Database operations for the reservation table
+ * @author frankeg
+ * 
+ *
+ */
 public class ReservationDAO extends DAO {
 	
 	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\Reservations;";
 	
+	
+	/**
+	 * Create a new reservation table if it doesn't exist
+	 */
 	public static void createNewTable() {
 
 		String tableName = "Reservations";
