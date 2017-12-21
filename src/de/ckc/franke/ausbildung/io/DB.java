@@ -3,6 +3,7 @@ package de.ckc.franke.ausbildung.io;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -83,7 +84,8 @@ public class DB {
 
 			// loop through the result set
 			while (rs.next()) {
-				System.out.println(rs.getInt("id") + "\t" + rs.getString("make") + rs.getString("model") + "\t" + rs.getDouble("mileage"));
+				System.out.println(rs.getInt("id") + "\t" + rs.getString("make") + "\t" + rs.getString("model") + "\t"
+						+ rs.getDouble("mileage"));
 			}
 			conn.close();
 		} catch (SQLException e) {
@@ -91,8 +93,23 @@ public class DB {
 		}
 	}
 
-	public static void insert() {
-
+	public static void insert(String make, String model, int mileage) {
+		String sql = "INSERT INTO vehicles(make,model,mileage) VALUES(?,?,?)";
+		Connection conn = connect();
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, make);
+			pstmt.setString(2, model);
+			pstmt.setInt(3, mileage);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void delete() {

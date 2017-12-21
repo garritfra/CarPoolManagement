@@ -24,14 +24,15 @@ public class Main {
 		String path = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\";
 		String fileName = "Vehicles";
 		//String absolutePath = path + fileName;
-//		Connection conn;
+		Connection conn;
 		
 		
-		DB.createNewDatabase(fileName);
-		DB.createNewTable("vehicles");
-		DB.connect();
-//		conn = DB.connect();
-		DB.selectAll();
+//		DB.createNewDatabase(fileName);
+//		DB.createNewTable("vehicles");
+//		DB.connect();
+		conn = DB.connect();
+//		DB.insert("Seat", "Ibiza", 55000);
+//		DB.selectAll();
 
 		// start program
 
