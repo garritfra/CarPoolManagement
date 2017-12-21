@@ -5,6 +5,18 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+/**
+ * DAO Superclass
+ * <p>
+ * used by:
+ * <ul>
+ * 	<li>vehicleDAO</li>
+ * 	<li>reservationDAO</li>
+ * </ul>
+ * @author frankeg
+ *
+ */
 abstract class DAO {
 	public static void createNewDatabase(String fileName, String url) {
 
@@ -21,6 +33,17 @@ abstract class DAO {
 		}
 	}
 
+	/**
+	 * Connects to a database via URL
+	 * This method should not be used on its own.
+	 * It should only be executed for other DAO Operations 
+	 * 
+	 * WARNING: Connection has to be closed after the method executes
+	 * 
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public static Connection connect(String url) {
 		Connection conn = null;
 		try {
