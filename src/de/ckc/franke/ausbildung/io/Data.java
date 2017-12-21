@@ -11,6 +11,9 @@ public class Data {
 	static Scanner scan = new Scanner(System.in);
 	Io io = new Io();
 
+	/**
+	 * Visual output of the import/export menu 
+	 */
 	public void menu() {
 		System.out.println("\nImport/Export Data");
 		System.out.println("--------------------");
@@ -24,7 +27,9 @@ public class Data {
 	}
 
 	/**
-	 * checks selection of menu
+	 * Import Export Menu Evaluation
+	 * 
+	 * Takes a userInput and evaluates which menu point executes
 	 * 
 	 * @param userInput
 	 */
@@ -43,13 +48,10 @@ public class Data {
 			VehicleDAO.updateAll();
 			break;
 		default:
-			//Back to menu
+			// Back to menu
 			menu();
 		}
 
 	}
-
-
-
 
 }
