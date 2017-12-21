@@ -6,7 +6,8 @@ package de.ckc.franke.ausbildung;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import de.ckc.franke.ausbildung.DAO.DB;
+import de.ckc.franke.ausbildung.DAO.ReservationDAO;
+import de.ckc.franke.ausbildung.DAO.VehicleDAO;
 import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
@@ -45,13 +46,17 @@ public class CarPoolManagement {
 
 	/**
 	 * Program start
-	 * @param vehicleList 
+	 * 
+	 * @param vehicleList
 	 */
 	void start(LinkedList<Vehicle> vehicleList) {
 		CarPoolManagement.vehicleList = vehicleList;
+
+		VehicleDAO.createNewTable();
+		ReservationDAO.createNewTable();
 		
-		vehicleList = DB.selectAll();
-		
+		vehicleList = VehicleDAO.selectAll();
+
 		// Data.toJSON(vehicleList);
 
 		// Set Dateformat Constants to not lenient for date conversion
@@ -76,7 +81,7 @@ public class CarPoolManagement {
 		Vehicle vehicle = new Vehicle(model, make, mileage);
 		vehicle.setId(vehicleList.size());
 		vehicleList.addLast(vehicle);
-		DB.insert(make, model, mileage);
+		VehicleDAO.insert(make, model, mileage);
 		controller.addVehicleSuccess();
 	}
 }

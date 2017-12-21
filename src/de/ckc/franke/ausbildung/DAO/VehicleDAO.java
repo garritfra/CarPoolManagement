@@ -12,26 +12,13 @@ import java.util.LinkedList;
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
 
-public class DB {
+public class VehicleDAO extends DAO {
 	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\Vehicles;";
 
-	public static void createNewDatabase(String fileName) {
+	public static void createNewTable() {
 
-		try (Connection conn = DriverManager.getConnection(url)) {
-			if (conn != null) {
-				DatabaseMetaData meta = conn.getMetaData();
-				System.out.println("The driver name is " + meta.getDriverName());
-				System.out.println("A new database has been created.");
-			}
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-
-		}
-	}
-
-	public static void createNewTable(String tableName) {
-
+		String tableName = "Vehicles";
+		
 		// SQL statement for creating a new table
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n" + "	id integer PRIMARY KEY,\n"
 				+ "	make text NOT NULL,\n" + "	model text NOT NULL,\n" + "	mileage integer\n" + ");";
@@ -54,35 +41,10 @@ public class DB {
 
 	}
 
-	public static Connection connect() {
-		Connection conn = null;
-		try {
-			// db parameters
-			// String url = "jdbc:sqlite:" + filePath;
-			// create a connection to the database
-			conn = DriverManager.getConnection(url);
-
-//			System.out.println("Connection to SQLite has been established.");
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			// } finally {
-			// try {
-			// if (conn != null) {
-			//
-			// conn.close();
-			// }
-			// } catch (SQLException ex) {
-			// System.out.println(ex.getMessage());
-			// }
-		}
-		return conn;
-	}
-
 	public static LinkedList<Vehicle> selectAll() {
 		String sql = "SELECT id, make, model, mileage FROM vehicles";
 		LinkedList<Vehicle> vehicleList = CarPoolManagement.vehicleList;
-		Connection conn = connect();
+		Connection conn = connect(url);
 		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
 			// loop through the result set
@@ -111,7 +73,7 @@ public class DB {
 
 	public static void insert(String make, String model, int mileage) {
 		String sql = "INSERT INTO vehicles(make,model,mileage) VALUES(?,?,?)";
-		Connection conn = connect();
+		Connection conn = connect(url);
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, make);
 			pstmt.setString(2, model);
@@ -127,21 +89,17 @@ public class DB {
 			}
 		}
 	}
-	
+
 	public static void updateAll() {
-		for (Vehicle vehicle: CarPoolManagement.vehicleList) {
+		for (Vehicle vehicle : CarPoolManagement.vehicleList) {
 			String make = vehicle.getMake();
 			String model = vehicle.getModel();
 			int mileage = vehicle.getMileage();
-			
-			DB.insert(make, model, mileage);
-			DB.selectAll();
+
+			VehicleDAO.insert(make, model, mileage);
 		}
+		VehicleDAO.selectAll();
 		System.out.println("Success");
-	}
-
-	public static void delete() {
-
 	}
 
 }

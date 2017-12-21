@@ -3,7 +3,7 @@ package de.ckc.franke.ausbildung.io;
 import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
-import de.ckc.franke.ausbildung.DAO.DB;
+import de.ckc.franke.ausbildung.DAO.VehicleDAO;
 import de.ckc.franke.ausbildung.io.wrapper.JSON;
 
 public class Data {
@@ -40,7 +40,7 @@ public class Data {
 			break;
 
 		case 3:
-			DB.updateAll();
+			VehicleDAO.updateAll();
 			break;
 		default:
 			//Back to menu
