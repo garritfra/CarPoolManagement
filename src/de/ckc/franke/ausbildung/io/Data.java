@@ -1,11 +1,9 @@
 package de.ckc.franke.ausbildung.io;
 
-import java.util.LinkedList;
 import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.io.wrapper.JSON;
-import de.ckc.franke.ausbildung.model.Vehicle;
 
 public class Data {
 
@@ -41,42 +39,16 @@ public class Data {
 			break;
 
 		case 3:
-			Data.updateDB();
+			DB.updateAll();
 			break;
 		default:
-			// Handle invalid inputs
-			// ErrorCode err = ErrorCode.INVALID_INPUT;
-			// System.err.println(err);
+			//Back to menu
 			menu();
 		}
 
 	}
 
-	private static void updateDB() {
 
-		DB.updateAll();
-		System.out.println("Success");
-		return;
-	}
 
-	public static void pupulateVehicleListFromArgs(String[] args, LinkedList<Vehicle> vehicleList) {
-		String[] vehicleAttr = null;
-		for (String s : args) {
-			vehicleAttr = s.split(",");
-
-			String model = vehicleAttr[0];
-			String make = vehicleAttr[1];
-			int mileage = Integer.parseInt(vehicleAttr[2]);
-
-			Vehicle vehicle = new Vehicle(model, make, mileage);
-
-			vehicle.createID(vehicleList);
-
-			vehicleList.addLast(vehicle);
-
-			// Reset vehicle to prevent wrong entries
-			vehicle = null;
-		}
-	}
 
 }

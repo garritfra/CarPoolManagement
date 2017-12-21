@@ -136,8 +136,8 @@ public class DB {
 			
 			DB.insert(make, model, mileage);
 			DB.selectAll();
-			
 		}
+		System.out.println("Success");
 	}
 
 	public static void delete() {
