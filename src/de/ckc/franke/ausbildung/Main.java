@@ -30,7 +30,7 @@ public class Main {
 //		DB.createNewDatabase(fileName);
 //		DB.createNewTable("vehicles");
 //		DB.connect();
-		conn = DB.connect();
+//		conn = DB.connect();
 //		DB.insert("Seat", "Ibiza", 55000);
 //		DB.selectAll();
 
