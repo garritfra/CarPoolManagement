@@ -100,7 +100,7 @@ public class Menu {
 			// list all reservations
 			listVehicles(vehicle, CarPoolManagement.vehicleList);
 
-			vehicle = io.findVehicleForReservation(CarPoolManagement.vehicleList);
+			vehicle = io.findVehicleForReservation();
 
 			io.listReservationsForVehicle(vehicle);
 			showMenu(); // Show Menu
