@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 abstract class DAO {
 	public static void createNewDatabase(String fileName, String url) {
