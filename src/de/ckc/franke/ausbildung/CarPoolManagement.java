@@ -58,13 +58,14 @@ public class CarPoolManagement {
 		vehicleList = VehicleDAO.selectAll();
 
 		// Data.toJSON(vehicleList);
-
+  
 		// Set Dateformat Constants to not lenient for date conversion
 		Constants.DATE_LONG.setLenient(false);
 		Constants.DATE_SHORT.setLenient(false);
 		menu.showMenu();
 	}
 
+	
 	public void newVehicle() {
 
 		// Get Make input

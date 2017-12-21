@@ -6,6 +6,12 @@ import de.ckc.franke.ausbildung.model.Vehicle;
 
 public class Args {
 
+	
+	/**
+	 * 
+	 * @param args
+	 * @param vehicleList
+	 */
 	public static void pupulateVehicleListFromArgs(String[] args, LinkedList<Vehicle> vehicleList) {
 		String[] vehicleAttr = null;
 		for (String s : args) {
