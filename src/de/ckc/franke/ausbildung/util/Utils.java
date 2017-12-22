@@ -192,7 +192,7 @@ public class Utils {
 		return date.after(currentTime);
 	}
 
-	private static boolean dateExists(Date date) {
+	public static boolean dateExists(Date date) {
 
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");

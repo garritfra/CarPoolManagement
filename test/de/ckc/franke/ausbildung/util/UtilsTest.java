@@ -3,6 +3,7 @@ package de.ckc.franke.ausbildung.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,11 +17,14 @@ public class UtilsTest {
 	Calendar dateStart = Calendar.getInstance();
 	Calendar dateEnd = Calendar.getInstance();
 	Calendar cal = Calendar.getInstance();
+	Calendar expected = Calendar.getInstance();
+	SimpleDateFormat sdf;
 
 	@Before
 	public void setUp() {
-		dateStart.set(2017,  01, 01);
+		dateStart.set(2017, 01, 01);
 		dateEnd.set(2018, 01, 01);
+		sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 	}
 
 	@Test
@@ -84,17 +88,26 @@ public class UtilsTest {
 
 	@Test
 	public void isInFutureTrue() {
-		
+
 		cal.set(2100, 01, 01);
-		
+
 		Assert.assertTrue(Utils.isInFuture(cal.getTime()));
 	}
+
 	@Test
 	public void isInFutureFalse() {
 
 		cal.set(2000, 01, 01);
-		
+
 		Assert.assertFalse(Utils.isInFuture(cal.getTime()));
 	}
+
+	@Test
+	public void dateExistsTrue() {
+		cal.set(2017, 01, 01);
+
+		Assert.assertTrue(Utils.dateExists(cal.getTime()));
+	}
+
 
 }
