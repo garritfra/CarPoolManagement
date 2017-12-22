@@ -56,13 +56,6 @@ public class CarPoolManagement {
 	void start(LinkedList<Vehicle> vehicleList) {
 		CarPoolManagement.vehicleList = vehicleList;
 
-		ArrayList<String> attributes = new ArrayList<>();
-		
-		attributes.add("Test1 text NOT NULL PRIMARY KEY");
-		attributes.add("kajsdhkaj integer NOT NULL");
-		
-		DAO.createNewTable("Test", attributes);
-		
 		
 		VehicleDAO.createNewTable();
 		ReservationDAO.createNewTable();
