@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.Controller;
+import de.ckc.franke.ausbildung.DAO.ReservationDAO;
+import de.ckc.franke.ausbildung.DAO.VehicleDAO;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import de.ckc.franke.ausbildung.util.Constants;
@@ -348,11 +350,15 @@ public class Menu {
 			}
 			
 			
-
+		int id = vehicle.getId();
 		
+		java.sql.Date sqlDateStart = new java.sql.Date(dateStart.getTime());
+		java.sql.Date sqlDateEnd = new java.sql.Date(dateEnd.getTime());
 
 		reservationList.add(reservation);
-
+		
+		ReservationDAO.insert(id, sqlDateStart, sqlDateEnd);
+		
 		vehicle.setReservationList(reservationList);
 
 		System.out.println("Reservation has been saved");
