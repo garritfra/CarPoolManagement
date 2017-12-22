@@ -70,7 +70,10 @@ public class CarPoolManagement {
 		menu.showMenu();
 	}
 
-	
+	/**
+	 * Prompts user to enter the make, model and mileage of a vehicle and adds it to the database.
+	 * It evaluates the mileage input by checking if it is numeric and not below 0.
+	 */
 	public void newVehicle() {
 
 		// Get Make input
