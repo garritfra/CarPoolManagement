@@ -1,11 +1,15 @@
 package de.ckc.franke.ausbildung;
 
+import java.util.ArrayList;
 /**
  * Main Program
  */
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import org.omg.DynamicAny.DynAnyOperations;
+
+import de.ckc.franke.ausbildung.DAO.DAO;
 import de.ckc.franke.ausbildung.DAO.ReservationDAO;
 import de.ckc.franke.ausbildung.DAO.VehicleDAO;
 import de.ckc.franke.ausbildung.io.Io;
@@ -52,6 +56,14 @@ public class CarPoolManagement {
 	void start(LinkedList<Vehicle> vehicleList) {
 		CarPoolManagement.vehicleList = vehicleList;
 
+		ArrayList<String> attributes = new ArrayList<>();
+		
+		attributes.add("Test1 text NOT NULL PRIMARY KEY");
+		attributes.add("kajsdhkaj integer NOT NULL");
+		
+		DAO.createNewTable("Test", attributes);
+		
+		
 		VehicleDAO.createNewTable();
 		ReservationDAO.createNewTable();
 		
