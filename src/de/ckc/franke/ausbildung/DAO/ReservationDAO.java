@@ -3,8 +3,14 @@ package de.ckc.franke.ausbildung.DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+
+import de.ckc.franke.ausbildung.CarPoolManagement;
+import de.ckc.franke.ausbildung.model.Reservation;
+import de.ckc.franke.ausbildung.model.Vehicle;
 
 /**
  * Database operations for the reservation table
@@ -70,5 +76,34 @@ public class ReservationDAO extends DAO {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static LinkedList<Reservation> selectAll() {
+		String sql = "SELECT id, make, model, mileage FROM vehicles";
+		Connection conn = connect(url);
+		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+			Vehicle vehicle = CarPoolManagement.vehicleList.get(rs.getInt("vehicleID"));
+			LinkedList<Reservation> reservationList = vehicle.getReservationList();
+			// loop through the result set
+			while (rs.next()) {
+
+				Reservation reservation = new Reservation(rs.getDate("dateStart"), rs.getDate("dateEnd"), vehicle);
+
+				reservationList.addLast(reservation);
+			}
+			return reservationList;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+
 	}
 }

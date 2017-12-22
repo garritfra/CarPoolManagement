@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.Controller;
+import de.ckc.franke.ausbildung.DAO.ReservationDAO;
+import de.ckc.franke.ausbildung.DAO.VehicleDAO;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import de.ckc.franke.ausbildung.util.Constants;
@@ -115,7 +117,7 @@ public class Io {
 	 */
 	public void listReservationsForVehicle(Vehicle vehicle) {
 
-		LinkedList<Reservation> reservationList = vehicle.getReservationList();
+		LinkedList<Reservation> reservationList = ReservationDAO.selectAll();
 		if (vehicle.getReservationList().isEmpty()) {
 			System.err.println("No reservations found");
 			Utils.flush();
