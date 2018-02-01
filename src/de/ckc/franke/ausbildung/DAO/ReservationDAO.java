@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.LinkedList;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
@@ -21,7 +22,7 @@ import de.ckc.franke.ausbildung.model.Vehicle;
  */
 public class ReservationDAO extends DAO {
 
-	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\Reservations;";
+	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\CarPoolDB;";
 
 	/**
 	 * Create a new reservation table if it doesn't exist
@@ -72,30 +73,57 @@ public class ReservationDAO extends DAO {
 		} finally {
 			try {
 				conn.close();
-			} catch (SQLException e) {
+			} catch (SQLException  e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
 	public static LinkedList<Reservation> selectAll() {
-		String sql = "SELECT id, make, model, mileage FROM vehicles";
 		Connection conn = connect(url);
-		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+		
+		
+		
+		
+		String sqlVehicle = "SELECT id, make, model, mileage FROM Vehicles";
+		try (Statement stmtVehicle = conn.createStatement(); ResultSet rsVehicle = stmtVehicle.executeQuery(sqlVehicle)) {
 
-			Vehicle vehicle = CarPoolManagement.vehicleList.get(rs.getInt("vehicleID"));
+			String sqlReservation = "SELECT id, beginDate, endDate FROM Reservations WHERE vehicleID = " + rsVehicle.getInt("id");
+			
+			Statement stmtReservation;
+			ResultSet rsReservation = null;
+			
+			try {
+				stmtReservation = conn.createStatement(); 
+				rsReservation = stmtReservation.executeQuery(sqlReservation);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			Vehicle vehicle = CarPoolManagement.vehicleList.get(rsVehicle.getInt("id"));
 			LinkedList<Reservation> reservationList = vehicle.getReservationList();
+			
 			// loop through the result set
-			while (rs.next()) {
-
-				Reservation reservation = new Reservation(rs.getDate("dateStart"), rs.getDate("dateEnd"), vehicle);
-
-				reservationList.addLast(reservation);
+			while (rsReservation.next()) {
+				Date dateStart =  rsReservation.getDate("beginDate");
+				Date dateEnd = rsReservation.getDate("endDate");
+				Reservation reservation = null;
+				
+				//Check if reservation already exists
+				for(Reservation r1 : reservationList) {
+					if(r1 != reservation) {
+						reservation = new Reservation(dateStart, dateEnd, vehicle);
+						reservationList.addLast(reservation);
+					}
+				}
 			}
 			return reservationList;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
+			
 			try {
 				conn.close();
 			} catch (SQLException e) {

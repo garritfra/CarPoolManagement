@@ -12,9 +12,8 @@ import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.model.Vehicle;
 
 public class VehicleDAO extends DAO {
-	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\Vehicles;";
+	static String url = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\CarPoolDB;";
 
-	
 	/**
 	 * Creates new vehicles table with all corresponding fields
 	 * 
@@ -23,7 +22,7 @@ public class VehicleDAO extends DAO {
 	public static void createNewTable() {
 
 		String tableName = "Vehicles";
-		
+
 		// SQL statement for creating a new table
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n" + "	id integer PRIMARY KEY,\n"
 				+ "	make text NOT NULL,\n" + "	model text NOT NULL,\n" + "	mileage integer\n" + ");";
@@ -46,9 +45,37 @@ public class VehicleDAO extends DAO {
 
 	}
 
-	
+	public static Vehicle getVehicleById(int id) {
+
+		String sql = "SELECT id, make, model, mileage FROM vehicles";
+		Connection conn = connect(url);
+
+		Vehicle vehicle = null;
+
+		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+			// loop through the result set
+			while (rs.next()) {
+
+				vehicle = new Vehicle(rs.getString("model"), rs.getString("make"), rs.getInt("mileage"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return vehicle;
+
+	}
+
 	/**
-	 * Select all vehicles and save then to the main vehicleList
+	 * Select all vehicles from the Database and save then to the main vehicleList
+	 * 
 	 * @return vehicleList
 	 */
 	public static LinkedList<Vehicle> selectAll() {
@@ -62,6 +89,7 @@ public class VehicleDAO extends DAO {
 
 				Vehicle vehicle = new Vehicle(rs.getString("model"), rs.getString("make"), rs.getInt("mileage"));
 
+				
 				vehicleList.addLast(vehicle);
 
 				// System.out.println(rs.getInt("id") + "\t" + rs.getString("make") + "\t" +
@@ -81,9 +109,9 @@ public class VehicleDAO extends DAO {
 		return vehicleList;
 	}
 
-	
 	/**
 	 * Insert new vehicle to database
+	 * 
 	 * @param make
 	 * @param model
 	 * @param mileage
@@ -106,24 +134,25 @@ public class VehicleDAO extends DAO {
 			}
 		}
 	}
-	
+
 	/**
-	 * add the currently loaded vehicleList to the database
-	 * WARNING: Vehicles added might be duplicates
+	 * add the currently loaded vehicleList to the database. WARNING: Vehicles added
+	 * might be duplicates
 	 * 
 	 * Prints out "Success" when done
+	 * 
 	 * @author frankeg
 	 */
 	public static void updateAll() {
+
 		for (Vehicle vehicle : CarPoolManagement.vehicleList) {
+			int id = vehicle.getId();
 			String make = vehicle.getMake();
 			String model = vehicle.getModel();
 			int mileage = vehicle.getMileage();
 
-			VehicleDAO.insert(make, model, mileage);
+			System.out.println("Success");
 		}
-		VehicleDAO.selectAll();
-		System.out.println("Success");
-	}
 
+	}
 }

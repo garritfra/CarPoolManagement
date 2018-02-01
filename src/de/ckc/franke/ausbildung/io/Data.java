@@ -45,7 +45,8 @@ public class Data {
 			break;
 
 		case 3:
-			VehicleDAO.updateAll();
+			System.out.println("Feature currently disabled");
+			//VehicleDAO.selectAll();
 			break;
 		default:
 			// Back to menu

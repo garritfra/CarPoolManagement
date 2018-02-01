@@ -57,6 +57,8 @@ public class CarPoolManagement {
 		CarPoolManagement.vehicleList = vehicleList;
 
 		
+		
+		DAO.createNewDatabase("CarPoolDB", "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\CarPoolManagement;");
 		VehicleDAO.createNewTable();
 		ReservationDAO.createNewTable();
 		
