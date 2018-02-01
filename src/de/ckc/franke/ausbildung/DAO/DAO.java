@@ -50,7 +50,7 @@ public abstract class DAO {
 		String urlPrefix = "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\";
 		String attrPrefix = " ";
 		String attrSuffix = ",\n";
-		String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n";
+		String sqlStatement = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n";
 		// SQL statement for creating a new table
 		// String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (\n" + " id
 		// integer PRIMARY KEY,\n"
@@ -63,21 +63,21 @@ public abstract class DAO {
 		for (String attr : attributes) {
 
 			// Add all attributes to the statement
-			sql += attrPrefix;
-			sql += attr;
+			sqlStatement += attrPrefix;
+			sqlStatement += attr;
 			if (iteration != attributes.size()){
-				sql += attrSuffix;
+				sqlStatement += attrSuffix;
 			}
 			iteration++;
 		}
 		// Add closing String to the attribute
-		sql += ");";
+		sqlStatement += ");";
 
 		try {
 			conn = DriverManager.getConnection(url);
 			Statement stmt = conn.createStatement();
 			// create a new table
-			stmt.execute(sql);
+			stmt.execute(sqlStatement);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
