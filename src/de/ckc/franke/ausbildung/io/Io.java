@@ -117,8 +117,8 @@ public class Io {
 	 */
 	public void listReservationsForVehicle(Vehicle vehicle) {
 
-		LinkedList<Reservation> reservationList = ReservationDAO.selectAll();
-		if (vehicle.getReservationList().isEmpty()) {
+		LinkedList<Reservation> reservationList = ReservationDAO.selectAllReservations(vehicle);
+		if (reservationList.isEmpty()) {
 			System.err.println("No reservations found");
 			Utils.flush();
 			return;
