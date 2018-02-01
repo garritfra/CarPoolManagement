@@ -1,11 +1,17 @@
 package de.ckc.franke.ausbildung;
 
+import java.util.ArrayList;
 /**
  * Main Program
  */
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import org.omg.DynamicAny.DynAnyOperations;
+
+import de.ckc.franke.ausbildung.DAO.DAO;
+import de.ckc.franke.ausbildung.DAO.ReservationDAO;
+import de.ckc.franke.ausbildung.DAO.VehicleDAO;
 import de.ckc.franke.ausbildung.io.Io;
 import de.ckc.franke.ausbildung.io.Menu;
 import de.ckc.franke.ausbildung.model.Reservation;
@@ -44,17 +50,32 @@ public class CarPoolManagement {
 
 	/**
 	 * Program start
+	 * 
+	 * @param vehicleList
 	 */
 	void start(LinkedList<Vehicle> vehicleList) {
 		CarPoolManagement.vehicleList = vehicleList;
-		// Data.toJSON(vehicleList);
 
+		
+		
+		DAO.createNewDatabase("CarPoolDB", "jdbc:sqlite:E:\\Daten_Garrit_Franke\\Datenbanken\\CarPoolManagement;");
+		VehicleDAO.createNewTable();
+		ReservationDAO.createNewTable();
+		
+		vehicleList = VehicleDAO.selectAll();
+
+		// Data.toJSON(vehicleList);
+  
 		// Set Dateformat Constants to not lenient for date conversion
 		Constants.DATE_LONG.setLenient(false);
 		Constants.DATE_SHORT.setLenient(false);
 		menu.showMenu();
 	}
 
+	/**
+	 * Prompts user to enter the make, model and mileage of a vehicle and adds it to the database.
+	 * It evaluates the mileage input by checking if it is numeric and not below 0.
+	 */
 	public void newVehicle() {
 
 		// Get Make input
@@ -71,6 +92,7 @@ public class CarPoolManagement {
 		Vehicle vehicle = new Vehicle(model, make, mileage);
 		vehicle.setId(vehicleList.size());
 		vehicleList.addLast(vehicle);
+		VehicleDAO.insert(make, model, mileage);
 		controller.addVehicleSuccess();
 	}
 }

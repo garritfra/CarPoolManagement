@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import de.ckc.franke.ausbildung.CarPoolManagement;
 import de.ckc.franke.ausbildung.Controller;
+import de.ckc.franke.ausbildung.DAO.ReservationDAO;
 import de.ckc.franke.ausbildung.model.Reservation;
 import de.ckc.franke.ausbildung.model.Vehicle;
 import de.ckc.franke.ausbildung.util.Constants;
@@ -26,7 +27,18 @@ public class Io {
 //	}
 	
 	
-
+/**
+ * Prompts user to enter a mileage integer and validates it
+ * <p>
+ * checks if
+ * <ul>
+ * <li>mileage is below 0</li>
+ * <li>mileage is a number</li>
+ * </ul>
+ * 
+ * if not so, the method recurses itself
+ * @return mileage
+ */
 	public int getMilageInput() {
 
 		String mileageStr;
@@ -51,8 +63,17 @@ public class Io {
 
 		}
 	}
-	
-	public Vehicle findVehicleForReservation(LinkedList<Vehicle> vehicleList) {
+	/**
+	 * Prompts user for a vehicle ID from the main vehicleList and gets the corresponding vehicle 
+	 * <p>
+	 * recurses if
+	 * <ul>
+	 * <li>the ID is not a number</li>
+	 * <li>the ID doesn't exist</li>
+	 * </ul>
+	 * @return {@link Vehicle}
+	 */
+	public Vehicle findVehicleForReservation() {
 		try {
 			
 			// Enter an ID and find vehicle
@@ -63,10 +84,10 @@ public class Io {
 			if (!Utils.isDigit(id)) {
 				System.err.println("ID is not valid\n");
 				Utils.flush();
-				findVehicleForReservation(vehicleList);
+				findVehicleForReservation();
 			} else {
 				// retry if ID is out of bounds
-					vehicle = vehicleList.get(Integer.parseInt(id));
+					vehicle = CarPoolManagement.vehicleList.get(Integer.parseInt(id));
 			}
 			//reservationList = carPoolManagement.getReservationList();
 			
@@ -78,19 +99,25 @@ public class Io {
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("ID not found");
 			Utils.flush();
-			findVehicleForReservation(vehicleList);
+			findVehicleForReservation();
 			
 			
 		}
 		return vehicle;
 	}
 	/**
-	 * lists all reservations for a given vehicle
+	 * lists all reservations for a given vehicle in a table
+	 * <p>
+	 * If no reservations were found, a error is displayed instead.
+	 * <p>
+	 * After reviewing the list, the user can go back to the menu by pressing the enter key
+	 * 
+	 * @param @{Vehicle} 
 	 */
 	public void listReservationsForVehicle(Vehicle vehicle) {
 
-		LinkedList<Reservation> reservationList = vehicle.getReservationList();
-		if (vehicle.getReservationList().isEmpty()) {
+		LinkedList<Reservation> reservationList = ReservationDAO.selectAllReservations(vehicle);
+		if (reservationList.isEmpty()) {
 			System.err.println("No reservations found");
 			Utils.flush();
 			return;
@@ -119,6 +146,11 @@ public class Io {
 		return;
 	}
 
+	/**
+	 * Prompts an integer from the user and checks if the input is numeric.
+	 * Most often used in menus, when the user has multiple numeric options .
+	 * @return choice
+	 */
 	public int getChoice() {
 
 		String choice = scan.nextLine();

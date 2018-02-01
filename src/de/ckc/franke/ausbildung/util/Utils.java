@@ -120,7 +120,7 @@ public class Utils {
 		}
 
 		// Check if begin is after end date
-		if (EndBeforeBegin(dateStart, dateEnd)) {
+		if (endBeforeBegin(dateStart, dateEnd)) {
 			System.err.println("The end date can not be before the begin date");
 			Utils.flush();
 			return false;
@@ -192,7 +192,7 @@ public class Utils {
 		return date.after(currentTime);
 	}
 
-	private static boolean dateExists(Date date) {
+	public static boolean dateExists(Date date) {
 
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
@@ -209,7 +209,7 @@ public class Utils {
 		return true;
 	}
 
-	public static boolean EndBeforeBegin(Date dateBegin, Date dateEnd) {
+	public static boolean endBeforeBegin(Date dateBegin, Date dateEnd) {
 
 		// return true, if end date is before begin date
 		return dateEnd.before(dateBegin);
